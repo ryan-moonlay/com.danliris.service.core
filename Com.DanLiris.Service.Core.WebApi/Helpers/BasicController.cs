@@ -27,6 +27,12 @@ namespace Com.DanLiris.Service.Core.WebApi.Helpers
             this.ApiVersion = ApiVersion;
         }
 
+        protected void VerifyUser()
+        {
+            Service.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
+            Service.Token = Request.Headers["Authorization"].First().Replace("Bearer ", "");
+        }
+
         [HttpGet]
         public IActionResult Get(int Page = 1, int Size = 25, string Order = "{}", [Bind(Prefix = "Select[]")]List<string> Select = null, string Keyword = "", string Filter = "{}")
         {
@@ -103,6 +109,8 @@ namespace Com.DanLiris.Service.Core.WebApi.Helpers
                     return BadRequest(Result);
                 }
 
+                VerifyUser();
+
                 await Service.UpdateModel(_id, model);
 
                 return NoContent();
@@ -147,8 +155,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Helpers
             {
                 TModel model = Service.MapToModel(ViewModel);
 
-                Service.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
-                Service.Token = Request.Headers["Authorization"].First().Replace("Bearer ", "");
+                VerifyUser();
 
                 await Service.CreateModel(model);
 
@@ -192,6 +199,8 @@ namespace Com.DanLiris.Service.Core.WebApi.Helpers
                         .Fail();
                     return NotFound(ResultNotFound);
                 }
+
+                VerifyUser();
 
                 await Service.DeleteModel(_id);
 
