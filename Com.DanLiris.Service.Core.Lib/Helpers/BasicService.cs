@@ -37,28 +37,28 @@ namespace Com.DanLiris.Service.Core.Lib.Helpers
             return await this.UpdateAsync(Id, Model);
         }
 
-        //public override void OnUpdating(int id, TModel model)
-        //{
-        //    base.OnUpdating(id, model);
-        //    model._LastModifiedAgent = "core-service";
-        //    model._LastModifiedBy = this.Username;
-        //}
+        public override void OnUpdating(int id, TModel model)
+        {
+            base.OnUpdating(id, model);
+            model._LastModifiedAgent = "core-service";
+            model._LastModifiedBy = this.Username ?? "";
+        }
 
-        //public override void OnCreating(TModel model)
-        //{
-        //    base.OnCreating(model);
-        //    model._CreatedAgent = "core-service";
-        //    model._CreatedBy = this.Username;
-        //    model._LastModifiedAgent = "core-service";
-        //    model._LastModifiedBy = this.Username;
-        //}
+        public override void OnCreating(TModel model)
+        {
+            base.OnCreating(model);
+            model._CreatedAgent = "core-service";
+            model._CreatedBy = this.Username ?? "";
+            model._LastModifiedAgent = "core-service";
+            model._LastModifiedBy = this.Username ?? "";
+        }
 
-        //public override void OnDeleting(TModel model)
-        //{
-        //    base.OnDeleting(model);
-        //    model._DeletedAgent = "core-service";
-        //    model._DeletedBy = this.Username;
-        //}
+        public override void OnDeleting(TModel model)
+        {
+            base.OnDeleting(model);
+            model._DeletedAgent = "core-service";
+            model._DeletedBy = this.Username ?? "";
+        }
 
         public virtual async Task<int> DeleteModel(int Id)
         {
