@@ -73,6 +73,8 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<MachineSpinningProcessType> MachineSpinningProcessType { get; set; }
         public DbSet<MappingCategory> MappingCategories { get; set; }
         public DbSet<SizeModel> Sizes { get; set; }
+        public DbSet<GarmentLeftoverWarehouseBuyerModel> GarmentLeftoverWarehouseBuyers { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
