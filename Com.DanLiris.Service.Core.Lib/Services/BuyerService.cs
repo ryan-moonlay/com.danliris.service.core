@@ -185,10 +185,10 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             {
                 ErrorMessage = "";
 
-                if (string.IsNullOrEmpty(buyerVM.NIK))
-                {
-                    ErrorMessage = string.Concat(ErrorMessage, "NIK tidak boleh kosong, ");
-                }
+                //if (string.IsNullOrEmpty(buyerVM.NIK))
+                //{
+                //    ErrorMessage = string.Concat(ErrorMessage, "NIK tidak boleh kosong, ");
+                //}
 
                 if (string.IsNullOrWhiteSpace(buyerVM.Code))
                 {
