@@ -9,8 +9,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.BuyerTest
     [Collection("ServiceProviderFixture Collection")]
     public class BuyerBasicTest : BasicServiceTest<CoreDbContext, BuyerService, Buyer>
     {
-        private static readonly string[] createAttrAssertions = { "Name", "Code", "Country", "Type", "Tempo" };
-        private static readonly string[] updateAttrAssertions = { "Name", "Code", "Country", "Type", "Tempo" };
+        private static readonly string[] createAttrAssertions = { "Name", "Code", "Country", "Type", "Tempo","NIK" };
+        private static readonly string[] updateAttrAssertions = { "Name", "Code", "Country", "Type", "Tempo","NIK" };
         private static readonly string[] existAttrCriteria = { "Code" };
         public BuyerBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
         {
@@ -23,6 +23,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.BuyerTest
             model.Type = string.Empty;
             model.NPWP = string.Empty;
             model.Tempo = -1;
+            model.NIK = string.Empty;
         }
 
         public override void EmptyUpdateModel(Buyer model)
@@ -33,6 +34,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.BuyerTest
             model.Type = string.Empty;
             model.NPWP = string.Empty;
             model.Tempo = -1;
+            model.NIK = string.Empty;
         }
 
         public override Buyer GenerateTestModel()
@@ -46,6 +48,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.BuyerTest
                 Country = string.Format("BuyerCountry {0}", guid),
                 Type = string.Format("BuyerType {0}", guid),
                 NPWP = string.Format("BuyerNPWP {0}", guid),
+                NIK = string.Format("BuyerNIK {0}",guid )
             };
         }
     }
