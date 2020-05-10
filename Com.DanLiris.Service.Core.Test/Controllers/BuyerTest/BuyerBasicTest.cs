@@ -74,6 +74,16 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.BuyerTest
         }
 
         [Fact]
+        public async Task Post_Validate_NIK()
+        {
+            BuyerViewModel VM = GenerateTestModel();
+            VM.NIK = null;
+            var response = await this.Client.PostAsync(URI, new StringContent(JsonConvert.SerializeObject(VM).ToString(), Encoding.UTF8, "application/json"));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
         public async Task Post_Failed_Internal_Server_Error()
         {
 
