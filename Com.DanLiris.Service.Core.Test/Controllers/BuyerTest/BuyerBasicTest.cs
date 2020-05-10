@@ -60,6 +60,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.BuyerTest
                 Tempo = 1,
                 Type = "Type",
                 NPWP ="NPWP",
+                NIK="NIK"
             };
         }
 
