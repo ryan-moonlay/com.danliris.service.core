@@ -41,6 +41,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 Tempo = 1,
                 Type = "Type",
                 NPWP = "NPWP",
+                NIK= "NIK"
             };
         }
 

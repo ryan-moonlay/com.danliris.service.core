@@ -60,6 +60,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.BuyerTest
                 Tempo = 1,
                 Type = "Type",
                 NPWP ="NPWP",
+                NIK="NIK"
             };
         }
 
@@ -70,6 +71,16 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.BuyerTest
             var response = await this.Client.PostAsync(URI, new StringContent(JsonConvert.SerializeObject(VM).ToString(), Encoding.UTF8, "application/json"));
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Post_Validate_NIK()
+        {
+            BuyerViewModel VM = GenerateTestModel();
+            VM.NIK = null;
+            var response = await this.Client.PostAsync(URI, new StringContent(JsonConvert.SerializeObject(VM).ToString(), Encoding.UTF8, "application/json"));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         [Fact]

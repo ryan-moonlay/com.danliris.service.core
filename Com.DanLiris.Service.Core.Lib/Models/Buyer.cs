@@ -38,6 +38,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         [StringLength(100)]
         public string NPWP { get; set; }
 
+        [StringLength(100)]
+        public string NIK { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> validationResult = new List<ValidationResult>();
@@ -67,6 +70,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
                 if (service.DbContext.Set<Buyer>().Count(r => r._IsDeleted.Equals(false) && r.Id != this.Id && r.Code.Equals(this.Code)) > 0) /* Code Unique */
                     validationResult.Add(new ValidationResult("Code already exists", new List<string> { "code" }));
             }
+
+            if (string.IsNullOrEmpty(NIK))
+                validationResult.Add(new ValidationResult("NIK is required", new List<string> { "nik" }));
 
             return validationResult;
         }
