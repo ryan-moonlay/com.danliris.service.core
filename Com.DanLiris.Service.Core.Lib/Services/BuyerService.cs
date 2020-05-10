@@ -185,6 +185,11 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             {
                 ErrorMessage = "";
 
+                if (string.IsNullOrEmpty(buyerVM.NIK))
+                {
+                    ErrorMessage = string.Concat(ErrorMessage, "NIK tidak boleh kosong, ");
+                }
+
                 if (string.IsNullOrWhiteSpace(buyerVM.Code))
                 {
                     ErrorMessage = string.Concat(ErrorMessage, "Kode tidak boleh kosong, ");
@@ -206,11 +211,6 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 else if (!Types.Any(t => t.Equals(buyerVM.Type)))
                 {
                     ErrorMessage = string.Concat(ErrorMessage, "Jenis Buyer harus salah satu dari Lokal, Ekspor, Internal; ");
-                }
-
-                if (string.IsNullOrWhiteSpace(buyerVM.NIK))
-                {
-                    ErrorMessage = string.Concat(ErrorMessage, "NIK tidak boleh kosong, ");
                 }
 
                 if (string.IsNullOrWhiteSpace(buyerVM.Country))
