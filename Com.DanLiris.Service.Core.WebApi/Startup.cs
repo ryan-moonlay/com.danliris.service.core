@@ -5,6 +5,7 @@ using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.Services.Account_and_Roles;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
 using Com.DanLiris.Service.Core.Lib.Services.MachineSpinning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -92,6 +93,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddScoped<StandardMinuteValueService>()
                 .AddTransient<IMachineSpinningService, MachineSpinningService>()
                 .AddTransient<IGarmentLeftoverWarehouseBuyerService, GarmentLeftoverWarehouseBuyerService>()
+                .AddTransient<IGarmentShippingStaffService, GarmentShipingStaffService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
