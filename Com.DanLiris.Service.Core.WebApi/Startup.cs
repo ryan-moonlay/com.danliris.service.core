@@ -6,6 +6,7 @@ using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.Services.Account_and_Roles;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentFabricType;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
 using Com.DanLiris.Service.Core.Lib.Services.MachineSpinning;
@@ -98,6 +99,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentShippingStaffService, GarmentShipingStaffService>()
                 .AddTransient<IGarmentFabricTypeService, GarmentFabricTypeService>()
                 .AddTransient<IGarmentEMKLService, GarmentEMKLService>()
+                .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
