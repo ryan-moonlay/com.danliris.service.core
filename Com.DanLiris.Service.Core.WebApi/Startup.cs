@@ -4,6 +4,7 @@ using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
 using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.Services.Account_and_Roles;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentFabricType;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
@@ -96,6 +97,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentLeftoverWarehouseBuyerService, GarmentLeftoverWarehouseBuyerService>()
                 .AddTransient<IGarmentShippingStaffService, GarmentShipingStaffService>()
                 .AddTransient<IGarmentFabricTypeService, GarmentFabricTypeService>()
+                .AddTransient<IGarmentEMKLService, GarmentEMKLService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
