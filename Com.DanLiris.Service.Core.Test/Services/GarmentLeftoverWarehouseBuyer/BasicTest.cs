@@ -138,7 +138,10 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentLeftoverWarehouseBuyer
             var viewModel = new GarmentLeftoverWarehouseBuyerViewModel
             {
                 Code = data.Code,
-                Name = data.Name
+                Name = data.Name,
+                Address = data.Address,
+                NPWP = data.NPWP,
+                WPName = data.WPName
             };
 
             var validationContext = new ValidationContext(viewModel, serviceProvider.Object, null);
