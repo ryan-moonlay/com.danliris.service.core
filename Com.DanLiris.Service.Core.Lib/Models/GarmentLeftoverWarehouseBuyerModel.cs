@@ -13,5 +13,11 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
         [MaxLength(3000)]
         public string Address { get; set; }
+
+        [MaxLength(50)]
+        public string NPWP { get; set; }
+
+        [MaxLength(50)]
+        public string WPName { get; set; }
     }
 }
