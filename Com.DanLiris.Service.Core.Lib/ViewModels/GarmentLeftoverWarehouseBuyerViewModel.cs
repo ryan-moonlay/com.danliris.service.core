@@ -13,9 +13,7 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
         public string Name { get; set; }
 
         public string Address { get; set; }
-
         public string NPWP { get; set; }
-
         public string WPName { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
