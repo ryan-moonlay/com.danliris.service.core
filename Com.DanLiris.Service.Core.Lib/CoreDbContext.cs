@@ -78,6 +78,7 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<GarmentFabricTypeModel> GarmentFabricTypes { get; set; }
         public DbSet<GarmentEMKLModel> GarmentEMKLs { get; set; }
         public DbSet<GarmentForwarderModel> GarmentForwarders { get; set; }
+        public DbSet<GarmentTransactionTypeModel> GarmentTransactionTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
