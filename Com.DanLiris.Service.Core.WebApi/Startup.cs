@@ -10,6 +10,7 @@ using Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
 using Com.DanLiris.Service.Core.Lib.Services.MachineSpinning;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentTransactionType;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -100,6 +101,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentFabricTypeService, GarmentFabricTypeService>()
                 .AddTransient<IGarmentEMKLService, GarmentEMKLService>()
                 .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
+                .AddTransient<IGarmentTransactionTypeService, GarmentTransactionTypeService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
