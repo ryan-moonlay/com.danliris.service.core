@@ -4,7 +4,14 @@ using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
 using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.Services.Account_and_Roles;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentFabricType;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseProduct;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
 using Com.DanLiris.Service.Core.Lib.Services.MachineSpinning;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentTransactionType;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -90,6 +97,13 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddScoped<GarmentSectionService>()
                 .AddScoped<StandardMinuteValueService>()
                 .AddTransient<IMachineSpinningService, MachineSpinningService>()
+                .AddTransient<IGarmentLeftoverWarehouseBuyerService, GarmentLeftoverWarehouseBuyerService>()
+                .AddTransient<IGarmentShippingStaffService, GarmentShipingStaffService>()
+                .AddTransient<IGarmentFabricTypeService, GarmentFabricTypeService>()
+                .AddTransient<IGarmentEMKLService, GarmentEMKLService>()
+                .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
+                .AddTransient<IGarmentTransactionTypeService, GarmentTransactionTypeService>()
+                .AddTransient<IGarmentLeftoverWarehouseProductService, GarmentLeftoverWarehouseProductService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 

@@ -195,5 +195,14 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 Unit = x.Unit,
             }).ToList();
         }
+
+        public List<Uom> GetSimpleWarpingWeaving()
+        {
+            return this.DbSet.Select(x => new Uom()
+            {
+                Id = x.Id,
+                Unit = x.Unit,
+            }).Where(o => o.Unit == "MTR" || o.Unit == "YARD").ToList();
+        }
     }
 }

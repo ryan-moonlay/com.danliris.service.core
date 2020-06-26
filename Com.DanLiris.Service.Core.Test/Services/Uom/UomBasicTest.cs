@@ -51,5 +51,12 @@ namespace Com.DanLiris.Service.Core.Test.Services.StandardTest
             var data = Service.GetSimple();
             Assert.NotNull(data);
         }
+
+        [Fact]
+        public void TestSimpleWarpingWeaving()
+        {
+            var data = Service.GetSimpleWarpingWeaving();
+            Assert.NotNull(data);
+        }
     }
 }

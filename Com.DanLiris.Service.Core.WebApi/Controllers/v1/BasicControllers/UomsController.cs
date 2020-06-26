@@ -44,5 +44,17 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                 return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
             }
         }
+
+        [HttpGet("simple-warping-weaving")]
+        public IActionResult GetSimpleWarpingWeaving()
+        {
+            List<Uom> Data = service.GetSimpleWarpingWeaving();
+            var result = Data.Select(x => service.MapToViewModel(x));
+            Dictionary<string, object> Result =
+                new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE)
+                .Ok(result);
+
+            return Ok(Result);
+        }
     }
 }

@@ -125,5 +125,12 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.UomTest
             var response = await this.Client.GetAsync(string.Concat(URI, "/simple"));
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Fact]
+        public async Task GetSimpleWarpingWeaving()
+        {
+            var response = await this.Client.GetAsync(string.Concat(URI, "/simple-warping-weaving"));
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }
