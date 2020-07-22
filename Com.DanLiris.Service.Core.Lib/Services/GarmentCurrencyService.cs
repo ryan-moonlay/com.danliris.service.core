@@ -266,5 +266,20 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 
             }
         }
+
+        public List<GarmentCurrencyViewModel> GetByCodeBeforeDate(List<GarmentCurrencyViewModel> filters)
+        {
+            List<GarmentCurrencyViewModel> data = new List<GarmentCurrencyViewModel>();
+            foreach (var filter in filters)
+            {
+                var model = DbSet.Where(q => q.Code == filter.code && q.Date <= filter.date).OrderByDescending(o => o.Date).FirstOrDefault();
+
+                if (data.Count(ac => ac.Id == model.Id) == 0)
+                {
+                    data.Add(MapToViewModel(model));
+                }
+            }
+            return data;
+        }
     }
 }

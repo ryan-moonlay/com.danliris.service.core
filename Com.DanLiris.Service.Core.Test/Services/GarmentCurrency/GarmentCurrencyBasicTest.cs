@@ -1,6 +1,7 @@
 ﻿using Com.Danliris.Service.Core.Test.Helpers;
 using Com.DanLiris.Service.Core.Lib;
 using Com.DanLiris.Service.Core.Lib.Services;
+using Com.DanLiris.Service.Core.Lib.ViewModels;
 using Com.DanLiris.Service.Core.Test.DataUtils;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,22 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 		{
 			Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
 			var Response = Services.GetSingleByCodeDate(model.Code, model.Date);
+			Assert.NotNull(Response);
+		}
+
+		[Fact]
+		public async void Should_Success_GetByCodeBeforeDate()
+		{
+			Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+            List<GarmentCurrencyViewModel> garmentCurrencies = new List<GarmentCurrencyViewModel>
+            {
+                new GarmentCurrencyViewModel
+                {
+                    code = model.Code,
+                    date = model.Date.AddDays(1)
+                }
+            };
+            var Response = Services.GetByCodeBeforeDate(garmentCurrencies);
 			Assert.NotNull(Response);
 		}
 	}
