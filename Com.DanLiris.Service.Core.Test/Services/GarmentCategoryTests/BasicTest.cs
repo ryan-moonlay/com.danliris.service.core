@@ -13,8 +13,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCategoryTests
     [Collection("ServiceProviderFixture Collection")]
     public class BasicTest : BasicServiceTest<CoreDbContext, GarmentCategoryService, GarmentCategory>
     {
-        private static readonly string[] createAttrAssertions = { "Name","Code","UomId","CodeRequirement" };
-        private static readonly string[] updateAttrAssertions = { "Name", "Code", "UomId", "CodeRequirement" };
+        private static readonly string[] createAttrAssertions = { "Name","Code","UomId","CodeRequirement", "CategoryType" };
+        private static readonly string[] updateAttrAssertions = { "Name", "Code", "UomId", "CodeRequirement", "CategoryType" };
         private static readonly string[] existAttrCriteria = { "Name" };
 
         public BasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
@@ -37,6 +37,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCategoryTests
             model.Name = string.Empty;
             model.UomId = null;
             model.CodeRequirement = string.Empty;
+            model.CategoryType = string.Empty;
         }
 
         public override void EmptyUpdateModel(GarmentCategory model)
@@ -45,6 +46,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCategoryTests
             model.Name = string.Empty;
             model.UomId = null;
             model.CodeRequirement = string.Empty;
+            model.CategoryType = string.Empty;
         }
 
         public override GarmentCategory GenerateTestModel()
@@ -56,7 +58,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCategoryTests
                 Name = String.Concat("TEST G-Category ", guid),
                 Code = guid,
                 CodeRequirement= String.Concat("TEST G-Category ", guid),
-                UomUnit= String.Concat("TEST G-Category ", guid),
+                CategoryType = String.Concat("TEST G-Category ", guid),
+                UomUnit = String.Concat("TEST G-Category ", guid),
                 UomId=1
             };
         }

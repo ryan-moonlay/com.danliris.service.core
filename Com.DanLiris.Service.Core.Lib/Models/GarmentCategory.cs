@@ -20,6 +20,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Name { get; set; }
         [MaxLength(255)]
         public string CodeRequirement { get; set; }
+        [MaxLength(255)]
+        public string CategoryType { get; set; }
         public int? UomId { get; set; }
         [MaxLength(255)]
         public string UomUnit { get; set; }
@@ -35,6 +37,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
             if (string.IsNullOrWhiteSpace(this.CodeRequirement))
                 validationResult.Add(new ValidationResult("CodeRequirement is required", new List<string> { "CodeRequirement" }));
+
+            if (string.IsNullOrWhiteSpace(this.CategoryType))
+                validationResult.Add(new ValidationResult("CategoryType is required", new List<string> { "CategoryType" }));
 
             if (this.UomId.Equals(null))
                 validationResult.Add(new ValidationResult("Uom is required", new List<string> { "UomId" }));

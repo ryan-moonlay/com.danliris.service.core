@@ -44,7 +44,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCategoryControllerTe
                 code = guid,
                 name = string.Format("TEST g-category {0}", guid),
                 codeRequirement = string.Format("TEST g-category {0}", guid),
-                uom=new UomViewModel
+                categoryType = string.Format("TEST g-category {0}", guid),
+                UOM = new GarmentCategoryUomViewModel
                 {
                     Id=1,
                     Unit = string.Format("TEST g-category {0}", guid)
