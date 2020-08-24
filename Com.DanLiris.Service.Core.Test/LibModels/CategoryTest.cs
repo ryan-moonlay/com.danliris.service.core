@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Com.DanLiris.Service.Core.Test.models
+namespace Com.DanLiris.Service.Core.Test.LibModels
 {
   public  class CategoryTest
     {
