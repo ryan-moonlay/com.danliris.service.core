@@ -146,5 +146,12 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.Product
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
+
+        [Fact]
+        public async Task Should_Error_GetByName()
+        {
+            var response = await this.Client.GetAsync(string.Concat(URI, "/by-name/any"));
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
     }
 }
