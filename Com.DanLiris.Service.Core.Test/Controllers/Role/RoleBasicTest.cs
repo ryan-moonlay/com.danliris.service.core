@@ -36,6 +36,14 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.Role
             {
                 Code = guid,
                 Name = string.Format("TEST {0}", guid),
+                Description = "Description",
+                Permissions =new List<PermissionViewModel>()
+                {
+                    new PermissionViewModel()
+                    {
+                        unit =new Lib.ViewModels.UnitViewModel()
+                    }
+                }
             };
         }
 
