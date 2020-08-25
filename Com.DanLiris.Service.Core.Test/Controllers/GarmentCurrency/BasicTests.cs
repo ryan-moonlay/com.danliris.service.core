@@ -72,8 +72,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
         public async Task Should_Error_Get_Data_By_Code()
         {
             string byCodeUri = "v1/master/garment-currencies/byCode";
-            //Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
-            var response = await this.Client.GetAsync($"{byCodeUri}/{""}");
+            Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+            var response = await this.Client.GetAsync($"{byCodeUri}/any");
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         }
 
