@@ -55,11 +55,11 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
 		{
 			GarmentCurrency model = new GarmentCurrency();
 
-			//string guid = Guid.NewGuid().ToString();
+			string guid = Guid.NewGuid().ToString();
 
-			//model.Code = guid;
-			//model.Date = DateTime.Now;
-			//model.Rate = 1;
+			model.Code = "anycode";
+			model.Date = DateTime.Now;
+			model.Rate = 1;
 
 			return model;
 		}
