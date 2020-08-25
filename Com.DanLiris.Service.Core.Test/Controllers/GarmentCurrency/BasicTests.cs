@@ -73,13 +73,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
         {
             string byCodeUri = "v1/master/garment-currencies/byCode";
             Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
-            // var response = await this.Client.GetAsync($"{byCodeUri}/");
-            var request = new HttpRequestMessage(HttpMethod.Get, byCodeUri)
-            {
-                Content = new StringContent(JsonConvert.SerializeObject(null), Encoding.Unicode, "application/json")
-            };
-            var response = await this.Client.SendAsync(request);
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            var response = await this.Client.GetAsync($"{byCodeUri}/any");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
