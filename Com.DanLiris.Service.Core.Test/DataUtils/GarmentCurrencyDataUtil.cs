@@ -44,24 +44,8 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
 			return model;
 		}
 
-		public  async Task<GarmentCurrency> GetTestInvalidData()
-		{
-			GarmentCurrency model = GetNewInvalidData();
-			await this.Service.CreateModel(model);
-			return model;
-		}
+		
 
-		public  GarmentCurrency GetNewInvalidData()
-		{
-			GarmentCurrency model = new GarmentCurrency();
-
-			string guid = Guid.NewGuid().ToString();
-
-			model.Code = "anycode";
-			model.Date = DateTime.Now;
-			model.Rate = 1;
-
-			return model;
-		}
+		
 	}
 }
