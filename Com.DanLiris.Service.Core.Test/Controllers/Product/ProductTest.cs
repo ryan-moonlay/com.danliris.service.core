@@ -150,7 +150,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.Product
         [Fact]
         public async Task Should_Error_GetByName()
         {
-            var response = await this.Client.GetAsync(string.Concat(URI, "/by-name/any"));
+            var response = await this.Client.GetAsync(string.Concat(URI, "/by-name/Any/any"));
+          //  var response = await this.Client.GetAsync($"{URI}/{null}");
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         }
     }
