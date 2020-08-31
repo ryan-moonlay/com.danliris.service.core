@@ -19,11 +19,11 @@ using System.Security.Claims;
 using System.Text;
 using Xunit;
 
-namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
+namespace Com.DanLiris.Service.Core.Test.UnitTest.Controller
 {
-  public  class GarmentCurrenciesControllerTest
+    public class UomsControllerTest
     {
-        protected GarmentCurrenciesController GetController(GarmentCurrencyService service)
+        protected UomsController GetController(UomService service)
         {
             var user = new Mock<ClaimsPrincipal>();
             var claims = new Claim[]
@@ -32,7 +32,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
             };
             user.Setup(u => u.Claims).Returns(claims);
 
-            GarmentCurrenciesController controller = new GarmentCurrenciesController(service);
+            UomsController controller = new UomsController(service);
             controller.ControllerContext = new ControllerContext()
             {
                 HttpContext = new DefaultHttpContext()
@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
             return controller;
         }
 
-        private CoreDbContext _dbContext(string testName)
+        private CoreDbContext GetDbContext(string testName)
         {
             var serviceProvider = new ServiceCollection()
               .AddEntityFrameworkInMemoryDatabase()
@@ -73,14 +73,10 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
 
         }
 
-        public Lib.Models.GarmentCurrency GetTestData(CoreDbContext dbContext)
+        public Lib.Models.Uom GetTestData(CoreDbContext dbContext)
         {
-            Lib.Models.GarmentCurrency data = new Lib.Models.GarmentCurrency()
-            {
-                Code="",
-                Rate=1
-            };
-            dbContext.GarmentCurrencies.Add(data);
+            Lib.Models.Uom data = new Lib.Models.Uom();
+            dbContext.UnitOfMeasurements.Add(data);
             dbContext.SaveChanges();
 
             return data;
@@ -93,35 +89,34 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
 
         Mock<IServiceProvider> GetServiceProvider()
         {
-            Mock<IServiceProvider> serviceProvider = new Mock<IServiceProvider>();
-            serviceProvider
+            Mock<IServiceProvider> serviceProviderMock = new Mock<IServiceProvider>();
+            serviceProviderMock
               .Setup(s => s.GetService(typeof(IIdentityService)))
               .Returns(new IdentityService() { TimezoneOffset = 1, Token = "token", Username = "username" });
 
             var validateService = new Mock<IValidateService>();
-            serviceProvider
+            serviceProviderMock
               .Setup(s => s.GetService(typeof(IValidateService)))
               .Returns(validateService.Object);
-            return serviceProvider;
+            return serviceProviderMock;
         }
 
-
         [Fact]
-        public void GetByIds_Return_OK()
+        public void GetSimple_Return_OK()
         {
             //Setup
-            CoreDbContext dbContext = _dbContext(GetCurrentAsyncMethod());
-            Mock<IServiceProvider> serviceProvider = GetServiceProvider();
+            CoreDbContext dbContext = GetDbContext(GetCurrentAsyncMethod());
+            Mock<IServiceProvider> serviceProviderMock = GetServiceProvider();
 
-            GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
+            UomService service = new UomService(serviceProviderMock.Object);
 
-            serviceProvider.Setup(s => s.GetService(typeof(GarmentCurrencyService))).Returns(service);
-            serviceProvider.Setup(s => s.GetService(typeof(CoreDbContext))).Returns(dbContext);
+            serviceProviderMock.Setup(s => s.GetService(typeof(UomService))).Returns(service);
+            serviceProviderMock.Setup(s => s.GetService(typeof(CoreDbContext))).Returns(dbContext);
 
-            Lib.Models.GarmentCurrency testData = GetTestData(dbContext);
+            Lib.Models.Uom testData = GetTestData(dbContext);
 
             //Act
-            IActionResult response = GetController(service).GetByIds(new List<int>() { testData.Id });
+            IActionResult response = GetController(service).GetSimple();
 
             //Assert
             int statusCode = this.GetStatusCode(response);
@@ -130,60 +125,19 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
 
 
         [Fact]
-        public void GetByIds_Return_InternalServerError()
+        public void GetSimple_Return_InternalServerError()
         {
             //Setup
-            Mock<IServiceProvider> serviceProvider = GetServiceProvider();
-            GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
-            serviceProvider.Setup(s => s.GetService(typeof(GarmentCurrencyService))).Returns(service);
+            Mock<IServiceProvider> serviceProviderMock = GetServiceProvider();
+            UomService service = new UomService(serviceProviderMock.Object);
+            serviceProviderMock.Setup(s => s.GetService(typeof(UomService))).Returns(service);
 
             //Act
-            IActionResult response = GetController(service).GetByIds(new List<int>() { 1 });
+            IActionResult response = GetController(service).GetSimple();
 
             //Assert
             int statusCode = this.GetStatusCode(response);
             Assert.Equal((int)HttpStatusCode.InternalServerError, statusCode);
         }
-
-        [Fact]
-        public void GetByCode_Return_Ok()
-        {
-            //Setup
-            CoreDbContext dbContext = _dbContext(GetCurrentAsyncMethod());
-            Mock<IServiceProvider> serviceProvider = GetServiceProvider();
-
-            GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
-
-            serviceProvider.Setup(s => s.GetService(typeof(GarmentCurrencyService))).Returns(service);
-            serviceProvider.Setup(s => s.GetService(typeof(CoreDbContext))).Returns(dbContext);
-
-            Lib.Models.GarmentCurrency testData = GetTestData(dbContext);
-
-            //Act
-            IActionResult response = GetController(service).GetByCode("");
-
-
-            //Assert
-            int statusCode = this.GetStatusCode(response);
-            Assert.Equal((int)HttpStatusCode.OK, statusCode);
-        }
-
-        [Fact]
-        public void GetByCode_Return_InternalServerError()
-        {
-            //Setup
-            Mock<IServiceProvider> serviceProvider = GetServiceProvider();
-            GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
-            serviceProvider.Setup(s => s.GetService(typeof(GarmentCurrencyService))).Returns(service);
-            
-            //Act
-            IActionResult response = GetController(service).GetByCode(null);
-
-
-            //Assert
-            int statusCode = this.GetStatusCode(response);
-            Assert.Equal((int)HttpStatusCode.InternalServerError, statusCode);
-        }
-
     }
 }
