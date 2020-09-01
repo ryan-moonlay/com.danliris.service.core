@@ -28,9 +28,8 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             return new Currency
             {
                 Code = string.Format("CurrencyCode {0}", guid),
-                Symbol = "IDR",
+                Symbol = "^_^",
                 Rate = 1,
-                UId="",
                 Description = string.Format("CurrencyDescription {0}", guid),
             };
         }

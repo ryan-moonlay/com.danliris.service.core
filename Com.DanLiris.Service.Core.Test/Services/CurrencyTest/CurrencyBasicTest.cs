@@ -55,8 +55,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
             return new Currency
             {
                 Code = string.Format("CurrencyCode {0}", guid),
-                Symbol = "IDR",
-                Rate = 10,
+                Symbol = "^_^",
+                Rate = 1,
                 Description = string.Format("CurrencySymbol {0}", guid),
             };
         }
@@ -87,7 +87,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
                     Code="",
                     Description="",
                     Symbol="",
-                    Rate=1,
+                    Rate="",
                 }
             };
 
@@ -110,7 +110,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
                     Code=model.Code,
                     Description=model.Description,
                     Symbol=model.Symbol,
-                    Rate=-1,
+                    Rate="-10",
                 }
             };
 
