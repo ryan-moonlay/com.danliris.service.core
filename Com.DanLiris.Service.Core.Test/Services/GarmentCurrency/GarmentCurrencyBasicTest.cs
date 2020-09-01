@@ -141,7 +141,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 				{
 					code = model.Code,
 					date = model.Date.AddDays(1),
-					rate=2.000,
+					rate="2.000",
 				}
 			};
 
