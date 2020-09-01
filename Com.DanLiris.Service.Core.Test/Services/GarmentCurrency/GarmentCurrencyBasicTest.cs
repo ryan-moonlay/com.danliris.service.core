@@ -146,7 +146,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 			};
 
 			List<KeyValuePair<string, StringValues>> body = new List<KeyValuePair<string, StringValues>>();
-			KeyValuePair<string, StringValues> keyValue =new   KeyValuePair<string, StringValues>("date", "2020-01-25");
+			KeyValuePair<string, StringValues> keyValue =new   KeyValuePair<string, StringValues>("date", "2020-01-10");
 			body.Add(keyValue);
 
 			var Response = Services.UploadValidate(garmentCurrencies,body);
