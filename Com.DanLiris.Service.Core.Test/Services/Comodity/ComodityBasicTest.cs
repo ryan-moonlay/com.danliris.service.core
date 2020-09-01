@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using Models = Com.DanLiris.Service.Core.Lib.Models;
 namespace Com.DanLiris.Service.Core.Test.Services.Comodity
@@ -62,7 +63,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.Comodity
         }
 
         [Fact]
-        public async void Should_Success_ReadModel()
+        public async Task Should_Success_ReadModel()
         {
            var model = await DataUtil.GetTestBuget();
 

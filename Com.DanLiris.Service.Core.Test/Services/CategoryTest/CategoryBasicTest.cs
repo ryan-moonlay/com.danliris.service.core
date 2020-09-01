@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Com.DanLiris.Service.Core.Test.DataUtils;
+using Newtonsoft.Json;
 
 namespace Com.DanLiris.Service.Core.Test.Services.CategoryTest
 {
@@ -20,6 +22,16 @@ namespace Com.DanLiris.Service.Core.Test.Services.CategoryTest
 
         public CategoryBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
         {
+        }
+
+        private CategoryDataUtil DataUtil
+        {
+            get { return (CategoryDataUtil)ServiceProvider.GetService(typeof(CategoryDataUtil)); }
+        }
+
+        private CategoryService Services
+        {
+            get { return (CategoryService)ServiceProvider.GetService(typeof(CategoryService)); }
         }
 
         public override void EmptyCreateModel(Category model)
@@ -62,5 +74,27 @@ namespace Com.DanLiris.Service.Core.Test.Services.CategoryTest
             var data = service.JoinDivision();
             Assert.NotNull(data);
         }
+
+
+        [Fact]
+        public async void Should_Success_ReadModel()
+        {
+            Category model = await DataUtil.GetTestDataAsync();
+
+            var orderData = new
+            {
+                Code = "asc"
+            };
+            string order = JsonConvert.SerializeObject(orderData);
+
+            Dictionary<string, object> filterDictionary = new Dictionary<string, object>();
+            filterDictionary.Add("Code", "");
+
+            var filter = JsonConvert.SerializeObject(filterDictionary);
+
+            var Response = Services.ReadModel(1, 25, order, new List<string>(), "", filter);
+            Assert.NotNull(Response);
+        }
+
     }
 }
