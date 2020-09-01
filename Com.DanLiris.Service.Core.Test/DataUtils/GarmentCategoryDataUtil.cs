@@ -30,6 +30,21 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             return Data;
         }
 
+        public GarmentCategoryViewModel GetNewData_GarmentCategoryViewModel()
+        {
+            GarmentCategoryViewModel Data = new GarmentCategoryViewModel();
+
+            Data.name = "";
+            Data.codeRequirement = "";
+            Data.categoryType = "";
+            Data.code = "";
+            Data.UOM = new GarmentCategoryUomViewModel()
+            {
+                Unit = ""
+            };
+            return Data;
+        }
+
         public override GarmentCategory GetNewData()
         {
             string guid = Guid.NewGuid().ToString();
