@@ -112,15 +112,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 		public async void Should_Success_ReadModel()
 		{
 			Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
-			List<GarmentCurrencyViewModel> garmentCurrencies = new List<GarmentCurrencyViewModel>
-			{
-				new GarmentCurrencyViewModel
-				{
-					code = model.Code,
-					date = model.Date.AddDays(1)
-				}
-			};
-
+			
 			var orderData = new
 			{
 				Code="asc"
@@ -139,9 +131,9 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 			{
 				new GarmentCurrencyViewModel
 				{
-					code = model.Code,
+					code = "",
 					date = model.Date.AddDays(1),
-					rate="2.000",
+					rate="",
 				}
 			};
 
