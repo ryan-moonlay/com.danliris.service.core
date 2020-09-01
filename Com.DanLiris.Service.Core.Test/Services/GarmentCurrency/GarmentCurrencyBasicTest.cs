@@ -145,6 +145,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 			Assert.NotNull(Response);
 		}
 
+
 		
 	}
 }
