@@ -3,6 +3,7 @@ using Com.DanLiris.Service.Core.Lib;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.ViewModels;
 using Com.DanLiris.Service.Core.Test.DataUtils;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -129,5 +130,29 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
 			var Response = Services.ReadModel(1, 25, order, new List<string>(), "", "{}");
 			Assert.NotNull(Response);
 		}
+
+		[Fact]
+		public async void Should_Success_UploadValidate()
+		{
+			Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+			List<GarmentCurrencyViewModel> garmentCurrencies = new List<GarmentCurrencyViewModel>
+			{
+				new GarmentCurrencyViewModel
+				{
+					code = model.Code,
+					date = model.Date.AddDays(1),
+					rate=2.000,
+				}
+			};
+
+			List<KeyValuePair<string, StringValues>> body = new List<KeyValuePair<string, StringValues>>();
+			KeyValuePair<string, StringValues> keyValue =new   KeyValuePair<string, StringValues>("date", "2020-01-25");
+			body.Add(keyValue);
+
+			var Response = Services.UploadValidate(garmentCurrencies,body);
+			Assert.NotNull(Response);
+		}
+
+		
 	}
 }
