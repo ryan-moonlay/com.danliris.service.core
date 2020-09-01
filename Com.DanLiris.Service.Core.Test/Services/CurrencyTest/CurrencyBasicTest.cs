@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
@@ -63,7 +62,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
         }
 
         [Fact]
-        public async Task Should_Success_ReadModel()
+        public async void Should_Success_ReadModel()
         {
             Currency model = await DataUtil.GetTestDataAsync();
 
@@ -78,10 +77,10 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
         }
 
         [Fact]
-        public async Task Should_Success_UploadValidate()
+        public async void Should_Success_UploadValidate()
         {
             Currency model = await DataUtil.GetTestDataAsync();
-            List<CurrencyViewModel> currencyViewModel = new List<CurrencyViewModel>
+            List<CurrencyViewModel> garmentCurrencies = new List<CurrencyViewModel>
             {
                 new CurrencyViewModel
                 {
@@ -96,15 +95,15 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
             KeyValuePair<string, StringValues> keyValue = new KeyValuePair<string, StringValues>("date", "2020-01-10");
             body.Add(keyValue);
 
-            var Response = Services.UploadValidate(currencyViewModel, body);
+            var Response = Services.UploadValidate(garmentCurrencies, body);
             Assert.NotNull(Response);
         }
 
         [Fact]
-        public async Task Should_Success_UploadValidate_when_Rate_LessThanZero()
+        public async void Should_Success_UploadValidate_when_Rate_LessThanZero()
         {
             Currency model = await DataUtil.GetTestDataAsync();
-            List<CurrencyViewModel> currencyViewModel = new List<CurrencyViewModel>
+            List<CurrencyViewModel> garmentCurrencies = new List<CurrencyViewModel>
             {
                 new CurrencyViewModel
                 {
@@ -119,7 +118,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.CurrencyTest
             KeyValuePair<string, StringValues> keyValue = new KeyValuePair<string, StringValues>("date", "2020-01-10");
             body.Add(keyValue);
 
-            var Response = Services.UploadValidate(currencyViewModel, body);
+            var Response = Services.UploadValidate(garmentCurrencies, body);
             Assert.NotNull(Response);
         }
     }

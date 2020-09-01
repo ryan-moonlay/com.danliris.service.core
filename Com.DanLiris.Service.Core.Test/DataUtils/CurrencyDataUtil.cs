@@ -27,12 +27,11 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             string guid = Guid.NewGuid().ToString();
             return new Currency
             {
-                Code = "IDR",
-                Symbol = "Rp",
+                Code = string.Format("CurrencyCode {0}", guid),
+                Symbol = "IDR",
                 Rate = 1,
                 UId="",
-                Description = "",
-                
+                Description = string.Format("CurrencyDescription {0}", guid),
             };
         }
 
