@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Test.UnitTest.Controller
             return controller;
         }
 
-        private CoreDbContext _dbContext(string testName)
+        private CoreDbContext GetDbContext(string testName)
         {
             var serviceProvider = new ServiceCollection()
               .AddEntityFrameworkInMemoryDatabase()
@@ -110,7 +110,7 @@ namespace Com.DanLiris.Service.Core.Test.UnitTest.Controller
         public void GetByIds_Return_OK()
         {
             //Setup
-            CoreDbContext dbContext = _dbContext(GetCurrentAsyncMethod());
+            CoreDbContext dbContext = GetDbContext(GetCurrentAsyncMethod());
             Mock<IServiceProvider> serviceProvider = GetServiceProvider();
 
             GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
@@ -149,7 +149,7 @@ namespace Com.DanLiris.Service.Core.Test.UnitTest.Controller
         public void GetByCode_Return_Ok()
         {
             //Setup
-            CoreDbContext dbContext = _dbContext(GetCurrentAsyncMethod());
+            CoreDbContext dbContext = GetDbContext(GetCurrentAsyncMethod());
             Mock<IServiceProvider> serviceProvider = GetServiceProvider();
 
             GarmentCurrencyService service = new GarmentCurrencyService(serviceProvider.Object);
