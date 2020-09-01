@@ -3,6 +3,7 @@ using Com.DanLiris.Service.Core.Lib;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Lib.ViewModels;
 using Com.DanLiris.Service.Core.Test.DataUtils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -103,6 +104,29 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentCurrency
                 }
             };
             var Response = Services.GetByCodeBeforeDate(garmentCurrencies);
+			Assert.NotNull(Response);
+		}
+
+		[Fact]
+		public async void Should_Success_ReadModel()
+		{
+			Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+			List<GarmentCurrencyViewModel> garmentCurrencies = new List<GarmentCurrencyViewModel>
+			{
+				new GarmentCurrencyViewModel
+				{
+					code = model.Code,
+					date = model.Date.AddDays(1)
+				}
+			};
+
+			var orderData = new
+			{
+				Code="asc"
+			};
+			string order = JsonConvert.SerializeObject(orderData);
+
+			var Response = Services.ReadModel(1, 25, order, new List<string>(), "", "{}");
 			Assert.NotNull(Response);
 		}
 	}
