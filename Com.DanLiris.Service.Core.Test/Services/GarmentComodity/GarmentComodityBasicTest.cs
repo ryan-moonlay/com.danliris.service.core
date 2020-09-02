@@ -16,6 +16,11 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentComodity
         public GarmentComodityBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
         {
         }
+
+        private GarmentComodityService Services
+        {
+            get { return (GarmentComodityService)ServiceProvider.GetService(typeof(GarmentComodityService)); }
+        }
         public override void EmptyCreateModel(Models.GarmentComodity model)
         {
             model.Code = string.Empty;
@@ -37,6 +42,16 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentComodity
                 Code = guid,
                 Name = string.Format("TEST {0}", guid),
             };
+        }
+
+        [Fact]
+        public void Should_Success_MapToViewModel()
+        {
+            Models.GarmentComodity model = GenerateTestModel();
+
+            var Response = Services.MapToViewModel(model);
+            Assert.NotNull(Response);
+            
         }
     }
 }
