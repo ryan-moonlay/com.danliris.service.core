@@ -33,8 +33,12 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
         {
             return new StandardMinuteValue()
             {
-                ComodityName="",
-                ComodityCode="",
+                BuyerName= "BuyerName",
+                ComodityName= "ComodityName",
+                ComodityCode= "ComodityCode",
+                SMVCutting=1,
+                SMVSewing =1,
+                SMVFinishing=1
             };
         }
 
