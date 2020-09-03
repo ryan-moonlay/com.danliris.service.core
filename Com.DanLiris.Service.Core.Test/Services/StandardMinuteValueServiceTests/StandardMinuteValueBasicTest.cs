@@ -77,20 +77,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.StandardMinuteValueServiceTest
 
         }
 
-        [Fact]
-        public async void Should_Success_ReadModel()
-        {
-            var model = await DataUtil.GetTestDataAsync();
-
-            var orderData = new
-            {
-                Code = "asc"
-            };
-            string order = JsonConvert.SerializeObject(orderData);
-
-            var Response = Services.ReadModel(1, 25, order, new List<string>(), "", "{}");
-            Assert.NotNull(Response);
-        }
+       
 
     }
 }
