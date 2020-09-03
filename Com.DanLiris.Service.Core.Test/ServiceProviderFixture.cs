@@ -77,6 +77,7 @@ namespace Com.DanLiris.Service.Core.Test
                 .AddTransient<GarmentComodityDataUtil>()
                 .AddTransient<GarmentSectionService>(provider => new GarmentSectionService(provider) { Username = "TEST" })
                 .AddTransient<StandardMinuteValueService>(provider => new StandardMinuteValueService(provider) { Username = "TEST" })
+                .AddTransient<StandardMinuteValueDataUtil>()
                 .AddTransient<GarmentSupplierDataUtil>()
                 .AddTransient<GarmentBuyerBrandDataUtil>()
                 .AddTransient<GarmentBuyerDataUtil>()
