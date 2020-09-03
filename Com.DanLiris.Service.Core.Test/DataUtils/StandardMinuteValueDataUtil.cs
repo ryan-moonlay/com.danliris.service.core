@@ -42,7 +42,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             };
         }
 
-        public override async Task<StandardMinuteValue> GetTestDataAsync()
+        public  override async Task<StandardMinuteValue> GetTestDataAsync()
         {
             var data = GetNewData();
             await Service.CreateModel(data);
