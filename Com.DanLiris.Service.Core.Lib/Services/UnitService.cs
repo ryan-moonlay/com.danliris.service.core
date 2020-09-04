@@ -58,7 +58,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     DivisionName = u.DivisionName,
                     Name = u.Name,
                     COACode = u.COACode
-                });
+                }).Where(x => x.Id != 37);
 
             /* Order */
             if (OrderDictionary.Count.Equals(0))
