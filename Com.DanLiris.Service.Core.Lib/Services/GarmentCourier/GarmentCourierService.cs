@@ -12,23 +12,23 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
+namespace Com.DanLiris.Service.Core.Lib.Services.GarmentCourier
 {
-    public class GarmentForwarderService : IGarmentForwarderService
+    public class GarmentCourierService : IGarmentCourierService
     {
         private const string _UserAgent = "core-service";
-        protected DbSet<GarmentForwarderModel> _DbSet;
+        protected DbSet<GarmentCourierModel> _DbSet;
         protected IIdentityService _IdentityService;
         public CoreDbContext _DbContext;
 
-        public GarmentForwarderService(IServiceProvider serviceProvider, CoreDbContext dbContext)
+        public GarmentCourierService(IServiceProvider serviceProvider, CoreDbContext dbContext)
         {
             _DbContext = dbContext;
-            _DbSet = dbContext.Set<GarmentForwarderModel>();
+            _DbSet = dbContext.Set<GarmentCourierModel>();
             _IdentityService = serviceProvider.GetService<IIdentityService>();
         }
 
-        public async Task<int> CreateAsync(GarmentForwarderModel model)
+        public async Task<int> CreateAsync(GarmentCourierModel model)
         {
             model.FlagForCreate(_IdentityService.Username, _UserAgent);
             model._LastModifiedAgent = model._CreatedAgent;
@@ -39,23 +39,23 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
             return await _DbContext.SaveChangesAsync();
         }
 
-        public ReadResponse<GarmentForwarderModel> Read(int page, int size, string order, List<string> select, string keyword, string filter)
+        public ReadResponse<GarmentCourierModel> Read(int page, int size, string order, List<string> select, string keyword, string filter)
         {
-            IQueryable<GarmentForwarderModel> Query = _DbSet;
+            IQueryable<GarmentCourierModel> Query = _DbSet;
 
             List<string> SearchAttributes = new List<string>()
             {
                 "Code", "Name", "Address", "Attention", "PhoneNumber", "FaxNumber", "Email", "NPWP"
             };
-            Query = QueryHelper<GarmentForwarderModel>.Search(Query, SearchAttributes, keyword);
+            Query = QueryHelper<GarmentCourierModel>.Search(Query, SearchAttributes, keyword);
 
             Dictionary<string, object> FilterDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(filter);
-            Query = QueryHelper<GarmentForwarderModel>.Filter(Query, FilterDictionary);
+            Query = QueryHelper<GarmentCourierModel>.Filter(Query, FilterDictionary);
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
-            Query = QueryHelper<GarmentForwarderModel>.Order(Query, OrderDictionary);
+            Query = QueryHelper<GarmentCourierModel>.Order(Query, OrderDictionary);
 
-            Query = Query.Select(s => new GarmentForwarderModel
+            Query = Query.Select(s => new GarmentCourierModel
             {
                 Id = s.Id,
                 Code = s.Code,
@@ -68,19 +68,19 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
                 NPWP = s.NPWP,
             });
 
-            Pageable<GarmentForwarderModel> pageable = new Pageable<GarmentForwarderModel>(Query, page - 1, size);
-            List<GarmentForwarderModel> Data = pageable.Data.ToList();
+            Pageable<GarmentCourierModel> pageable = new Pageable<GarmentCourierModel>(Query, page - 1, size);
+            List<GarmentCourierModel> Data = pageable.Data.ToList();
 
             int TotalData = pageable.TotalCount;
-            return new ReadResponse<GarmentForwarderModel>(Data, TotalData, OrderDictionary, new List<string>());
+            return new ReadResponse<GarmentCourierModel>(Data, TotalData, OrderDictionary, new List<string>());
         }
 
-        public async Task<GarmentForwarderModel> ReadByIdAsync(int id)
+        public async Task<GarmentCourierModel> ReadByIdAsync(int id)
         {
             return await _DbSet.Where(w => w.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> UpdateAsync(int id, GarmentForwarderModel model)
+        public async Task<int> UpdateAsync(int id, GarmentCourierModel model)
         {
             model.FlagForUpdate(_IdentityService.Username, _UserAgent);
             _DbSet.Update(model);
@@ -95,7 +95,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
             return await _DbContext.SaveChangesAsync();
         }
 
-        public bool CheckExisting(Expression<Func<GarmentForwarderModel, bool>> filter)
+        public bool CheckExisting(Expression<Func<GarmentCourierModel, bool>> filter)
         {
             var count = _DbSet.Where(filter).Count();
 

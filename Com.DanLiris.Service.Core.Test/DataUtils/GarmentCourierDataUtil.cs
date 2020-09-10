@@ -1,5 +1,5 @@
 ﻿using Com.DanLiris.Service.Core.Lib.Models;
-using Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentCourier;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Com.DanLiris.Service.Core.Test.DataUtils
 {
-    public class GarmentEMKLDataUtil
+    public class GarmentCourierDataUtil
     {
-        private readonly GarmentEMKLService Service;
+        private readonly GarmentCourierService Service;
 
-        public GarmentEMKLDataUtil(GarmentEMKLService service)
+        public GarmentCourierDataUtil(GarmentCourierService service)
         {
             Service = service;
         }
 
-        public GarmentEMKLModel GetNewData()
+        public GarmentCourierModel GetNewData()
         {
             Guid guid = Guid.NewGuid();
 
-            GarmentEMKLModel model = new GarmentEMKLModel
+            GarmentCourierModel model = new GarmentCourierModel
             {
                 Code = $"Code{guid}",
                 Name = $"Name{guid}",
@@ -35,7 +35,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             return model;
         }
 
-        public async Task<GarmentEMKLModel> GetTestData()
+        public async Task<GarmentCourierModel> GetTestData()
         {
             var data = GetNewData();
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Com.DanLiris.Service.Core.Lib.Models
 {
-    public class GarmentForwarderModel : StandardEntity
+    public class GarmentCourierModel : StandardEntity
     {
         [MaxLength(10)]
         public string Code { get; set; }
@@ -28,6 +28,5 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
         [MaxLength(50)]
         public string NPWP { get; set; }
-
     }
 }

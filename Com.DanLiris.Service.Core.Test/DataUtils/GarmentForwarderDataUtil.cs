@@ -29,6 +29,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 PhoneNumber = $"PhoneNumber{guid}",
                 FaxNumber = $"FaxNumber{guid}",
                 Email = $"Email{guid}",
+                NPWP = $"NPWP{guid}",
             };
 
             return model;

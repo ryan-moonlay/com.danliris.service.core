@@ -1,12 +1,12 @@
 ﻿using Com.DanLiris.Service.Core.Lib.Helpers;
-using Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentCourier;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Com.DanLiris.Service.Core.Lib.ViewModels
 {
-    public class GarmentForwarderViewModel : BasicViewModel, IValidatableObject
+    public class GarmentCourierViewModel : BasicViewModel, IValidatableObject
     {
         public string Code { get; set; }
 
@@ -26,7 +26,7 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            IGarmentForwarderService service = (IGarmentForwarderService)validationContext.GetService(typeof(IGarmentForwarderService));
+            IGarmentCourierService service = (IGarmentCourierService)validationContext.GetService(typeof(IGarmentCourierService));
 
             if (string.IsNullOrWhiteSpace(Code))
             {
