@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Com.DanLiris.Service.Core.Test.DataUtils
 {
-    class YarnMaterialServiceDataUtil
+ public   class YarnMaterialServiceDataUtil
     {
         public CoreDbContext DbContext { get; set; }
         public YarnMaterialService YarnMaterialService { get; set; }
@@ -39,5 +39,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 return YarnMaterialService.GetAsync(id);
             }
         }
+
+
     }
 }

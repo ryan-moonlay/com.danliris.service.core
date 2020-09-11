@@ -1,7 +1,10 @@
 ﻿using Com.Danliris.Service.Core.Test.Helpers;
 using Com.DanLiris.Service.Core.Lib;
 using Com.DanLiris.Service.Core.Lib.Services;
+using Com.DanLiris.Service.Core.Test.DataUtils;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using Xunit;
 using Models = Com.DanLiris.Service.Core.Lib.Models;
 
@@ -16,6 +19,16 @@ namespace Com.DanLiris.Service.Core.Test.Services.StandardMinuteValueServiceTest
 
         public StandardMinuteValueBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
         {
+        }
+
+        private StandardMinuteValueDataUtil DataUtil
+        {
+            get { return (StandardMinuteValueDataUtil)ServiceProvider.GetService(typeof(StandardMinuteValueDataUtil)); }
+        }
+
+        private StandardMinuteValueService Services
+        {
+            get { return (StandardMinuteValueService)ServiceProvider.GetService(typeof(StandardMinuteValueService)); }
         }
 
         public override void EmptyCreateModel(Models.StandardMinuteValue model)
@@ -53,5 +66,18 @@ namespace Com.DanLiris.Service.Core.Test.Services.StandardMinuteValueServiceTest
                 SMVSewing = 2,
             };
         }
+
+        [Fact]
+        public void Should_Success_MapToViewModel()
+        {
+            Models.StandardMinuteValue model = GenerateTestModel();
+
+            var Response = Services.MapToViewModel(model);
+            Assert.NotNull(Response);
+
+        }
+
+       
+
     }
 }

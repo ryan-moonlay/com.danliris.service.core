@@ -68,6 +68,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
+       
         [Fact]
         public async Task Should_Success_Get_Single_Data_By_Code()
         {
