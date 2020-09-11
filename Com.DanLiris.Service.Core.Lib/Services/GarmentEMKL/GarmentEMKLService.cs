@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name", "Address", "Attention", "PhoneNumber", "FaxNumber", "Email"
+                "Code", "Name", "Address", "Attention", "PhoneNumber", "FaxNumber", "Email", "NPWP"
             };
             Query = QueryHelper<GarmentEMKLModel>.Search(Query, SearchAttributes, keyword);
 
@@ -65,6 +65,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL
                 PhoneNumber = s.PhoneNumber,
                 FaxNumber = s.FaxNumber,
                 Email = s.Email, 
+                NPWP = s.NPWP,
             });
 
             Pageable<GarmentEMKLModel> pageable = new Pageable<GarmentEMKLModel>(Query, page - 1, size);
