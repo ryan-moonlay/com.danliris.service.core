@@ -5,26 +5,12 @@ using System.Collections.Generic;
 
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
-    public partial class CreateTableGarmentCourier : Migration
+    public partial class CreateGarmentInsuranceandCourier : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "NPWP",
-                table: "GarmentForwarders",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "NPWP",
-                table: "GarmentEMKLs",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: true);
-
             migrationBuilder.CreateTable(
-                name: "GarmentCourierModel",
+                name: "GarmentCouriers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -51,22 +37,48 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GarmentCourierModel", x => x.Id);
+                    table.PrimaryKey("PK_GarmentCouriers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GarmentInsurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccountNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
+                    Attention = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    BankName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    NPWP = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    _CreatedAgent = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _CreatedBy = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _CreatedUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    _DeletedAgent = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _DeletedBy = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _DeletedUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    _IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    _LastModifiedAgent = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _LastModifiedBy = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    _LastModifiedUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GarmentInsurances", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GarmentCourierModel");
+                name: "GarmentCouriers");
 
-            migrationBuilder.DropColumn(
-                name: "NPWP",
-                table: "GarmentForwarders");
-
-            migrationBuilder.DropColumn(
-                name: "NPWP",
-                table: "GarmentEMKLs");
+            migrationBuilder.DropTable(
+                name: "GarmentInsurances");
         }
     }
 }
