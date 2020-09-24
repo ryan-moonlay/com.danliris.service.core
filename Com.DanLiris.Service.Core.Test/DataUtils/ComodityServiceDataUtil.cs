@@ -21,6 +21,15 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             this.ComodityService = comodityService;
         }
 
+        public Comodity GetNewData()
+        {
+            string guid = Guid.NewGuid().ToString();
+            return new Comodity()
+            {
+                Code = string.Format("TEST {0}", guid),
+                Name ="",
+            };
+        }
         public Task<Comodity> GetTestBuget()
         {
             Comodity test = ComodityService.DbSet.FirstOrDefault(comodity => comodity.Code.Equals("Test"));

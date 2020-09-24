@@ -24,8 +24,24 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
 
             Data.name = "";
             Data.codeRequirement = "";
+            Data.categoryType = "";
             Data.code = "";
-            Data.uom = null;
+            Data.UOM = null;
+            return Data;
+        }
+
+        public GarmentCategoryViewModel GetNewData_GarmentCategoryViewModel()
+        {
+            GarmentCategoryViewModel Data = new GarmentCategoryViewModel();
+
+            Data.name = "";
+            Data.codeRequirement = "";
+            Data.categoryType = "";
+            Data.code = "";
+            Data.UOM = new GarmentCategoryUomViewModel()
+            {
+                Unit = ""
+            };
             return Data;
         }
 
@@ -36,6 +52,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             {
                 Name = "TEST",
                 CodeRequirement = "TEST",
+                CategoryType = "TEST",
                 UomId=1,
                 UomUnit = "TEST",
                 Code = guid

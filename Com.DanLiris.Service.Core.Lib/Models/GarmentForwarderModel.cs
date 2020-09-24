@@ -26,5 +26,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         [MaxLength(50)]
         public string Email { get; set; }
 
+        [MaxLength(50)]
+        public string NPWP { get; set; }
+
     }
 }

@@ -22,6 +22,8 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
 
         public string Email { get; set; }
 
+        public string NPWP { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             IGarmentForwarderService service = (IGarmentForwarderService)validationContext.GetService(typeof(IGarmentForwarderService));

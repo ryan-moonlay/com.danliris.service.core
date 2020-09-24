@@ -146,5 +146,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.Product
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
+
+      
     }
 }

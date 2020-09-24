@@ -46,5 +46,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.YarnMaterial
                 Remark = "remark",
             };
         }
+
+
     }
 }

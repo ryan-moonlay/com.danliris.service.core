@@ -11,6 +11,7 @@ using Com.DanLiris.Service.Core.Lib;
 using Com.DanLiris.Service.Core.Lib.Services;
 using Com.DanLiris.Service.Core.Test.DataUtils;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
 {
@@ -67,6 +68,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
+       
         [Fact]
         public async Task Should_Success_Get_Single_Data_By_Code()
         {
@@ -100,6 +102,44 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentCurrency
             string byCodeUri = "v1/master/garment-currencies/single-by-code-date";
             Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
             var response = await this.Client.GetAsync($"{byCodeUri}?stringDate={model.Date.ToString()}");
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Should_Success_GetByCodeBeforeDate()
+        {
+            string byCodeUri = "v1/master/garment-currencies/by-code-before-date";
+            Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+
+            List<GarmentCurrencyViewModel> garmentCurrencies = new List<GarmentCurrencyViewModel>
+            {
+                new GarmentCurrencyViewModel
+                {
+                    code = model.Code,
+                    date = model.Date.AddDays(1)
+                }
+            };
+            var request = new HttpRequestMessage(HttpMethod.Get, byCodeUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(garmentCurrencies), Encoding.Unicode, "application/json")
+            };
+            var response = await this.Client.SendAsync(request);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Should_Error_GetByCodeBeforeDate()
+        {
+            string byCodeUri = "v1/master/garment-currencies/by-code-before-date";
+            Models.GarmentCurrency model = await DataUtil.GetTestDataAsync();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, byCodeUri)
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(null), Encoding.Unicode, "application/json")
+            };
+            var response = await this.Client.SendAsync(request);
+
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
         }
     }

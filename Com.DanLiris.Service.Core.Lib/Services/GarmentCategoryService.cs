@@ -42,7 +42,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "Id", "Code", "Name", "CodeRequirement", "Uom"
+                "Id", "Code", "Name", "CodeRequirement", "Uom", "CategoryType"
             };
 
             Query = Query
@@ -53,7 +53,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     Name=a.Name,
                     UomId=a.UomId,
                     UomUnit=a.UomUnit,
-                    CodeRequirement=a.CodeRequirement
+                    CodeRequirement=a.CodeRequirement,
+                    CategoryType =a.CategoryType
                 });
 
             /* Order */
@@ -90,7 +91,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             GarmentCategoryViewModel categoryViewModel = new GarmentCategoryViewModel();
             PropertyCopier<GarmentCategory, GarmentCategoryViewModel>.Copy(category, categoryViewModel);
 
-            categoryViewModel.uom = new UomViewModel
+            categoryViewModel.UOM = new GarmentCategoryUomViewModel
             {
                 Id = (int)category.UomId,
                 Unit= category.UomUnit
@@ -98,8 +99,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryViewModel.name = category.Name;
             categoryViewModel.code = category.Code;
             categoryViewModel.codeRequirement = category.CodeRequirement;
-
-
+            categoryViewModel.categoryType = category.CategoryType;
 
             return categoryViewModel;
         }
@@ -109,10 +109,10 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             GarmentCategory garmentCategory = new GarmentCategory();
             PropertyCopier<GarmentCategoryViewModel, GarmentCategory>.Copy(categoryVM, garmentCategory);
 
-            if (!Equals(categoryVM.uom, null))
+            if (!Equals(categoryVM.UOM, null))
             {
-                garmentCategory.UomId = categoryVM.uom.Id;
-                garmentCategory.UomUnit = categoryVM.uom.Unit;
+                garmentCategory.UomId = categoryVM.UOM.Id;
+                garmentCategory.UomUnit = categoryVM.UOM.Unit;
             }
             else
             {
@@ -122,6 +122,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             garmentCategory.Name = categoryVM.name;
             garmentCategory.Code = categoryVM.code;
             garmentCategory.CodeRequirement = categoryVM.codeRequirement;
+            garmentCategory.CategoryType = categoryVM.categoryType;
 
             return garmentCategory;
         }

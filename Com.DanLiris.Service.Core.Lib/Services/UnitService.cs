@@ -58,7 +58,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     DivisionName = u.DivisionName,
                     Name = u.Name,
                     COACode = u.COACode
-                });
+                }).Where(x => x.Id != 37);
 
             /* Order */
             if (OrderDictionary.Count.Equals(0))
@@ -111,6 +111,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             unitVM.Name = unit.Name;
             unitVM.Description = unit.Description;
             unitVM.COACode = unit.COACode;
+            unitVM.VBDocumentLayoutOrder = unit.VBDocumentLayoutOrder;
             
             return unitVM;
         }
@@ -157,6 +158,11 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 Map(b => b.Name).Index(2);
                 Map(b => b.Description).Index(3);
             }
+        }
+
+        public List<Unit> GetUnitWithVBDocumentLayoutOrder()
+        {
+            return DbSet.Where(entity => entity.VBDocumentLayoutOrder > 0).OrderBy(entity => entity.VBDocumentLayoutOrder).ToList();
         }
 
         public Tuple<bool, List<object>> UploadValidate(List<UnitViewModel> Data, List<KeyValuePair<string, StringValues>> Body)

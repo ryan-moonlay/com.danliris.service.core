@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name", "Address", "Attention", "PhoneNumber", "FaxNumber", "Email"
+                "Code", "Name", "Address", "Attention", "PhoneNumber", "FaxNumber", "Email", "NPWP"
             };
             Query = QueryHelper<GarmentForwarderModel>.Search(Query, SearchAttributes, keyword);
 
@@ -65,6 +65,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder
                 PhoneNumber = s.PhoneNumber,
                 FaxNumber = s.FaxNumber,
                 Email = s.Email, 
+                NPWP = s.NPWP,
             });
 
             Pageable<GarmentForwarderModel> pageable = new Pageable<GarmentForwarderModel>(Query, page - 1, size);

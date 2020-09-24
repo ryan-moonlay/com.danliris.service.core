@@ -26,6 +26,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentCourier;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance;
 
 namespace Com.DanLiris.Service.Core.WebApi
 {
@@ -104,6 +106,8 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
                 .AddTransient<IGarmentTransactionTypeService, GarmentTransactionTypeService>()
                 .AddTransient<IGarmentLeftoverWarehouseProductService, GarmentLeftoverWarehouseProductService>()
+                .AddTransient<IGarmentCourierService, GarmentCourierService>()
+                .AddTransient<IGarmentInsuranceService, GarmentInsuranceService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
