@@ -29,6 +29,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 PhoneNumber = $"PhoneNumber{guid}",
                 BankName = $"BankName{guid}",
                 AccountNumber = $"AccountNumber{guid}",
+                SwiftCode = $"SwiftCode{guid}",
                 NPWP = $"NPWP{guid}",
             };
 

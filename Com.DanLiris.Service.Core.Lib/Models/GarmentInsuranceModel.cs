@@ -27,6 +27,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string AccountNumber { get; set; }
 
         [MaxLength(50)]
+        public string SwiftCode { get; set; }
+
+        [MaxLength(50)]
         public string NPWP { get; set; }
     }
 }
