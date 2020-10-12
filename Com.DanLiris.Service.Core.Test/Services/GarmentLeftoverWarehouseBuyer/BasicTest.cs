@@ -140,6 +140,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentLeftoverWarehouseBuyer
                 Code = data.Code,
                 Name = data.Name,
                 Address = data.Address,
+                PhoneNumber = data.PhoneNumber,
+                NIK = data.NIK,
                 NPWP = data.NPWP,
                 WPName = data.WPName
             };

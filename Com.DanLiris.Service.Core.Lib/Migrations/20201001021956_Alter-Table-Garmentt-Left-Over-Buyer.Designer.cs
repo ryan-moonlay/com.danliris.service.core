@@ -11,9 +11,10 @@ using System;
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201001021956_Alter-Table-Garmentt-Left-Over-Buyer")]
+    partial class AlterTableGarmenttLeftOverBuyer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1469,9 +1470,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("SwiftCode")
                         .HasMaxLength(50);
 
                     b.Property<string>("_CreatedAgent")
