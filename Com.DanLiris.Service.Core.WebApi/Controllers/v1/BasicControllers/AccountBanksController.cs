@@ -23,25 +23,15 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         [HttpGet("division/{divisionName}")]
         public IActionResult GetByDivisionName(string divisionName)
         {
-            try
-            {
-                Tuple<List<AccountBank>> Data = Service.ReadModelByDivisionName(divisionName);
+            Tuple<List<AccountBank>> Data = Service.ReadModelByDivisionName(divisionName);
 
-                return Ok(new
-                {
-                    apiVersion = ApiVersion,
-                    statusCode = General.OK_STATUS_CODE,
-                    message = General.OK_MESSAGE,
-                    data = Data.Item1
-                });
-            }
-            catch (Exception e)
+            return Ok(new
             {
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
-                    .Fail();
-                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
-            }
+                apiVersion = ApiVersion,
+                statusCode = General.OK_STATUS_CODE,
+                message = General.OK_MESSAGE,
+                data = Data.Item1
+            });
         }
 
     }
