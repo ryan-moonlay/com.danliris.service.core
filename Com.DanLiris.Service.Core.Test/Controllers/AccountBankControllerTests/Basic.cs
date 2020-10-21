@@ -95,7 +95,7 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.AccountBankControllerTests
         public async Task GetByDivisionName()
         {
             AccountBankViewModel bankVM = GenerateTestModel();
-            var post = await this.Client.PostAsync(URI, new StringContent(JsonConvert.SerializeObject(bankVM).ToString(), Encoding.UTF8, "application/json"));
+            //var post = await this.Client.PostAsync(URI, new StringContent(JsonConvert.SerializeObject(bankVM).ToString(), Encoding.UTF8, "application/json"));
 
             var response = await this.Client.GetAsync(URI + "/division/" + bankVM.Division.Name);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
