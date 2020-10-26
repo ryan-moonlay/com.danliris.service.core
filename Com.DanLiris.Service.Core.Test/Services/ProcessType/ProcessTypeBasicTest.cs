@@ -12,8 +12,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.ProcessTypeTest
     [Collection("ServiceProviderFixture Collection")]
     public class ProcessTypeBasicTest : BasicServiceTest<CoreDbContext, ProcessTypeService, ProcessType>
     {
-        private static readonly string[] createAttrAssertions = { "Name" };
-        private static readonly string[] updateAttrAssertions = { "Name" };
+        private static readonly string[] createAttrAssertions = { "Name", "Unit" };
+        private static readonly string[] updateAttrAssertions = { "Name", "Unit" };
         private static readonly string[] existAttrCriteria = { "Name","Unit" };
 
         public ProcessTypeBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
