@@ -42,7 +42,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.OrderTypeTest
             {
                 Name = string.Format("Order {0}", guid),
                 Code = string.Format("Code {0}", guid),
-                Unit = string.Format("Unit {0}", guid),
+                //Unit = string.Format("Unit {0}", guid),
+                Unit = "Unit",
                 Remark = "REMARK",
             };
         }
