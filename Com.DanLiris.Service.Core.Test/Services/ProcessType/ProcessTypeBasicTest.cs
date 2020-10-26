@@ -24,12 +24,14 @@ namespace Com.DanLiris.Service.Core.Test.Services.ProcessTypeTest
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
+            model.Unit = string.Empty;
         }
 
         public override void EmptyUpdateModel(ProcessType model)
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
+            model.Unit = string.Empty;
         }
 
         public override ProcessType GenerateTestModel()
@@ -40,6 +42,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.ProcessTypeTest
             {
                 Name = string.Format("TEST {0}", guid),
                 Code = string.Format("TEST {0}", guid),
+                Unit=string.Format("TEST {0}",guid)
             };
         }
     }
