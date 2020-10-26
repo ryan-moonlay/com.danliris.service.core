@@ -15,7 +15,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public string Remark { get; set; }
-        
+        public string Unit { get; set; }
+
         /*order type*/
         public int OrderTypeId { get; set; }
         public string OrderTypeCode { get; set; }
@@ -31,6 +32,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
             if (string.IsNullOrWhiteSpace(this.Code))
                 validationResult.Add(new ValidationResult("Code is required", new List<string> { "Code" }));
+
+            if (string.IsNullOrWhiteSpace(this.Unit))
+                validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
 
             if (validationResult.Count.Equals(0))
             {
