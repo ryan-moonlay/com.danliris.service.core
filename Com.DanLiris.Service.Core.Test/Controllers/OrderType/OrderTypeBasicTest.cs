@@ -50,7 +50,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.OrderTypeTest
             {
                 Name = string.Format("TEST {0}", guid),
                 Code = string.Format("TEST {0}", guid),
-                Unit = string.Format("TEST {0}", guid),
+                //Unit = string.Format("TEST {0}", guid),
+                Unit ="Unit",
                 Remark = "REMARK",
             };
         }
