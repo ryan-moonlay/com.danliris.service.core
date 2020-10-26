@@ -24,14 +24,14 @@ namespace Com.DanLiris.Service.Core.Test.Services.OrderTypeTest
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
-            model.Unit = string.Empty;
+      //      model.Unit = string.Empty;
         }
 
         public override void EmptyUpdateModel(OrderType model)
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
-            model.Unit = string.Empty;
+        //    model.Unit = string.Empty;
         }
 
         public override OrderType GenerateTestModel()
