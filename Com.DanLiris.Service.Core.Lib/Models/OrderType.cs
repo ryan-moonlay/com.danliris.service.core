@@ -35,10 +35,10 @@ namespace Com.DanLiris.Service.Core.Lib.Models
                     yield return new ValidationResult("Nama Jenis Order sudah ada", new List<string> { "Name" });
             }
 
-            if (string.IsNullOrWhiteSpace(this.Unit))
-            {
-                yield return new ValidationResult("Unit harus diisi", new List<string> { "Unit" });
-            }
+            //if (string.IsNullOrWhiteSpace(this.Unit))
+            //{
+            //    yield return new ValidationResult("Unit harus diisi", new List<string> { "Unit" });
+            //}
 
         }
     }

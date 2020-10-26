@@ -33,8 +33,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
             if (string.IsNullOrWhiteSpace(this.Code))
                 validationResult.Add(new ValidationResult("Code is required", new List<string> { "Code" }));
 
-            if (string.IsNullOrWhiteSpace(this.Unit))
-                validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
+            //if (string.IsNullOrWhiteSpace(this.Unit))
+            //    validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
 
             if (validationResult.Count.Equals(0))
             {
