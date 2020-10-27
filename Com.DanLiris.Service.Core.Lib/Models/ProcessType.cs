@@ -16,6 +16,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Name { get; set; }
         public string Remark { get; set; }
         public string Unit { get; set; }
+        
+        public string SPPCode { get; set; }
 
         /*order type*/
         public int OrderTypeId { get; set; }
@@ -26,28 +28,30 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> validationResult = new List<ValidationResult>();
-
+            /* Service Validation */
+            ProcessTypeService service = (ProcessTypeService)validationContext.GetService(typeof(ProcessTypeService));
             if (string.IsNullOrWhiteSpace(this.Name))
                 validationResult.Add(new ValidationResult("Name is required", new List<string> { "Name" }));
+            else
+            {
+                if (service.DbContext.Set<ProcessType>().Count(r => r._IsDeleted.Equals(false) && r.Id != this.Id && r.Name.Equals(this.Name)) > 0) /* Name Unique */
+                    validationResult.Add(new ValidationResult("Name already exists", new List<string> { "Name" }));
+            }
 
             if (string.IsNullOrWhiteSpace(this.Code))
                 validationResult.Add(new ValidationResult("Code is required", new List<string> { "Code" }));
+            else
+            {
+                if (service.DbContext.Set<ProcessType>().Count(r => r._IsDeleted.Equals(false) && r.Id != this.Id && r.Code.Equals(this.Code)) > 0) /* Code Unique */
+                    validationResult.Add(new ValidationResult("Code already exists", new List<string> { "Code" }));
+            }
 
             if (string.IsNullOrWhiteSpace(this.Unit))
                 validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
 
-            if (validationResult.Count.Equals(0))
-            {
-                /* Service Validation */
-                ProcessTypeService service = (ProcessTypeService)validationContext.GetService(typeof(ProcessTypeService));
+            if (string.IsNullOrWhiteSpace(this.SPPCode))
+                validationResult.Add(new ValidationResult("Kode SPP is required", new List<string> { "SPPCode" }));
 
-                if (service.DbContext.Set<ProcessType>().Count(r => r._IsDeleted.Equals(false) && r.Id != this.Id && r.Code.Equals(this.Code)) > 0) /* Code Unique */
-                    validationResult.Add(new ValidationResult("Code already exists", new List<string> { "Code" }));
-
-                if (service.DbContext.Set<ProcessType>().Count(r => r._IsDeleted.Equals(false) && r.Id != this.Id && r.Name.Equals(this.Name)) > 0) /* Name Unique */
-                    validationResult.Add(new ValidationResult("Name already exists", new List<string> { "Name" }));
-
-            }
 
             return validationResult;
         }

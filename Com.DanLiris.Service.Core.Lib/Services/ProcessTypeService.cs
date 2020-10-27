@@ -26,6 +26,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             model.OrderTypeCode = viewModel.OrderType.Code;
             model.OrderTypeName = viewModel.OrderType.Name;
             model.OrderTypeRemark = viewModel.OrderType.Remark;
+
             return model;
         }
 
@@ -38,6 +39,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             viewModel.OrderType.Code = model.OrderTypeCode;
             viewModel.OrderType.Name = model.OrderTypeName;
             viewModel.OrderType.Remark = model.OrderTypeRemark;
+            viewModel.OrderType.Unit = model.Unit;
 
             return viewModel;
         }
@@ -63,7 +65,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "Id", "Code", "Name","Unit", "Remark", "_LastModifiedUtc", "OrderType"
+                "Id", "Code", "Name","Unit", "Remark", "_LastModifiedUtc", "OrderType", "SPPCode"
             };
 
             Query = Query
@@ -72,7 +74,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     Id = b.Id,
                     Code = b.Code,
                     Name = b.Name,
-                    Unit=b.Unit,
+                    Unit = b.Unit,
+                    SPPCode = b.SPPCode,
                     Remark = b.Remark,
                     OrderTypeCode = b.OrderTypeCode,
                     OrderTypeId = b.OrderTypeId,

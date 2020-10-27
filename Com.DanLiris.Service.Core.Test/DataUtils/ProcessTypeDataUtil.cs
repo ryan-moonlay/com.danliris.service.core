@@ -31,7 +31,8 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 Name = string.Format("TEST {0}", guid),
                 Code = string.Format("TEST {0}", guid),
                 Unit = string.Format("TEST {0}", guid),
-              //  Unit= "Unit"
+                SPPCode = string.Format("TEST {0}", guid)
+                //  Unit= "Unit"
             };
         }
 

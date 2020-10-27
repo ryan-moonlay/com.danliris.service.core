@@ -11,9 +11,10 @@ using System;
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201027141335_AddSPPCOde")]
+    partial class AddSPPCOde
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2390,7 +2391,8 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
 
                     b.Property<string>("Remark");
 
-                    b.Property<string>("SPPCode");
+                    b.Property<string>("SPPCode")
+                        .HasMaxLength(32);
 
                     b.Property<string>("UId")
                         .HasMaxLength(255);
