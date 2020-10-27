@@ -16,6 +16,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Name { get; set; }
         public string Remark { get; set; }
         public string Unit { get; set; }
+        
+        [MaxLength(32)]
+        public string SPPCode { get; set; }
 
         /*order type*/
         public int OrderTypeId { get; set; }
@@ -35,6 +38,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
             if (string.IsNullOrWhiteSpace(this.Unit))
                 validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
+
+            if (string.IsNullOrWhiteSpace(SPPCode))
+                validationResult.Add(new ValidationResult("Kode SPP is required", new List<string> { "SPPCode" }));
 
             if (validationResult.Count.Equals(0))
             {
