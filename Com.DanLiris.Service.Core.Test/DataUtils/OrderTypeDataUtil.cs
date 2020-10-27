@@ -30,6 +30,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             {
                 Code = string.Format("TEST", guid),
                 Name = string.Format("TEST", guid),
+                Unit = string.Format("TEST", guid),
                 Remark = "REMARK",
             };
         }

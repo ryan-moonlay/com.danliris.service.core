@@ -12,8 +12,8 @@ namespace Com.DanLiris.Service.Core.Test.Services.OrderTypeTest
     [Collection("ServiceProviderFixture Collection")]
     public class OrderTypeBasicTest : BasicServiceTest<CoreDbContext, OrderTypeService, OrderType>
     {
-        private static readonly string[] createAttrAssertions = { "Name" };
-        private static readonly string[] updateAttrAssertions = { "Name" };
+        private static readonly string[] createAttrAssertions = { "Name","Unit" };
+        private static readonly string[] updateAttrAssertions = { "Name","Unit" };
         private static readonly string[] existAttrCriteria = { "Name" };
 
         public OrderTypeBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
@@ -24,12 +24,14 @@ namespace Com.DanLiris.Service.Core.Test.Services.OrderTypeTest
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
+           model.Unit = string.Empty;
         }
 
         public override void EmptyUpdateModel(OrderType model)
         {
             model.Code = string.Empty;
             model.Name = string.Empty;
+           model.Unit = string.Empty;
         }
 
         public override OrderType GenerateTestModel()
@@ -40,6 +42,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.OrderTypeTest
             {
                 Name = string.Format("Order {0}", guid),
                 Code = string.Format("Code {0}", guid),
+                Unit = string.Format("Unit {0}", guid),
                 Remark = "REMARK",
             };
         }
