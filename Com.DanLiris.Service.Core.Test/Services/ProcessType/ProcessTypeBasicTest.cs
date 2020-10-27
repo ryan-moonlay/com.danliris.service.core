@@ -14,7 +14,7 @@ namespace Com.DanLiris.Service.Core.Test.Services.ProcessTypeTest
     {
         private static readonly string[] createAttrAssertions = { "Name", "Unit", "SPPCode" };
         private static readonly string[] updateAttrAssertions = { "Name", "Unit", "SPPCode", "Code" };
-        private static readonly string[] existAttrCriteria = { "Name", "Code" };
+        private static readonly string[] existAttrCriteria = { "Name" };
 
         public ProcessTypeBasicTest(ServiceProviderFixture fixture) : base(fixture, createAttrAssertions, updateAttrAssertions, existAttrCriteria)
         {
