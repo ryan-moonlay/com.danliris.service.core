@@ -39,7 +39,7 @@ namespace Com.DanLiris.Service.Core.Lib.Models
             if (string.IsNullOrWhiteSpace(this.Unit))
                 validationResult.Add(new ValidationResult("Unit is required", new List<string> { "Unit" }));
 
-            if (string.IsNullOrWhiteSpace(SPPCode))
+            if (string.IsNullOrWhiteSpace(this.SPPCode))
                 validationResult.Add(new ValidationResult("Kode SPP is required", new List<string> { "SPPCode" }));
 
             if (validationResult.Count.Equals(0))
