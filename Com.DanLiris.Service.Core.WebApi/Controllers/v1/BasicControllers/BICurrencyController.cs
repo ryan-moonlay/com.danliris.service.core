@@ -8,7 +8,6 @@ using CsvHelper;
 using CsvHelper.TypeConversion;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 {
     [Produces("application/json")]
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/bi-currencies")]
+    [Route("v{version:apiVersion}/master/bi-currencies")]
     [Authorize]
     public class BICurrencyController : Controller
     {
@@ -239,7 +238,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
             catch (TypeConverterException ex)
             {
-                var response = new Utils.ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, "Tahun, Delivery atau Kapasitas diisi huruf\n" + ex.Message).Fail();
+                var response = new Utils.ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, "Rate diisi huruf\n" + ex.Message).Fail();
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
             catch (Exception e)

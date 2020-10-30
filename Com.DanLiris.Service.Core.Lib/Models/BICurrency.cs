@@ -24,9 +24,6 @@ namespace Com.DanLiris.Service.Core.Lib.Models
             if (string.IsNullOrWhiteSpace(Code))
                 validationResult.Add(new ValidationResult("Code is required", new List<string> { "Code" }));
 
-            if (string.IsNullOrWhiteSpace(Name))
-                validationResult.Add(new ValidationResult("Name is required", new List<string> { "Name" }));
-
             if (Date > DateTime.Now)
                 validationResult.Add(new ValidationResult("Date must be less than or equal today's date", new List<string> { "Date" }));
 

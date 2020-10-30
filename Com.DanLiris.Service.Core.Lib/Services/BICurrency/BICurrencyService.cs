@@ -130,11 +130,6 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BICurrency
                     errorMessage = string.Concat(errorMessage, "Code tidak boleh kosong, ");
                 }
 
-                if (string.IsNullOrWhiteSpace(datum.Name))
-                {
-                    errorMessage = string.Concat(errorMessage, "Nama tidak boleh kosong, ");
-                }
-
                 if (datum.Date > DateTime.Now)
                 {
                     errorMessage = string.Concat(errorMessage, "Tanggal tidak boleh kosong, ");
@@ -151,7 +146,6 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BICurrency
                     var error = new ExpandoObject() as IDictionary<string, object>;
 
                     error.Add("Code", datum.Code);
-                    error.Add("Name", datum.Name);
                     error.Add("Date", datum.Date);
                     error.Add("Rate", datum.Rate);
                     error.Add("Error", errorMessage);
