@@ -22,6 +22,8 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
 
         public string AccountNumber { get; set; }
 
+        public string SwiftCode { get; set; }
+
         public string NPWP { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

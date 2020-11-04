@@ -93,6 +93,38 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
 
+        public Tuple<List<AccountBank>> ReadModelByDivisionName(string divisionName)
+        {
+            IQueryable<AccountBank> Query = this.DbContext.AccountBanks;
+
+
+            Query = Query.Where(bank => bank.DivisionName == divisionName);
+
+            Query = Query
+                .Select(a => new AccountBank
+                {
+                    Id = a.Id,
+                    Code = a.Code,
+                    BankCode = a.BankCode,
+                    BankName = a.BankName,
+                    BankAddress = a.BankAddress,
+                    AccountName = a.AccountName,
+                    AccountNumber = a.AccountNumber,
+                    SwiftCode = a.SwiftCode,
+                    CurrencyId = a.CurrencyId,
+                    CurrencyCode = a.CurrencyCode,
+                    DivisionCode = a.DivisionCode,
+                    DivisionId = a.DivisionId,
+                    DivisionName = a.DivisionName,
+                    _LastModifiedUtc = a._LastModifiedUtc,
+                    AccountCOA = a.AccountCOA
+                });
+
+            List<AccountBank> Data = new List<AccountBank>(Query);
+
+            return Tuple.Create(Data);
+        }
+
         public AccountBankViewModel MapToViewModel(AccountBank accountBank)
         {
             AccountBankViewModel accountBankVM = new AccountBankViewModel();

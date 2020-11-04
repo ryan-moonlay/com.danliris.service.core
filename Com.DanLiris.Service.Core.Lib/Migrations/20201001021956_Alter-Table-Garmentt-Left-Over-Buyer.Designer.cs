@@ -11,9 +11,10 @@ using System;
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201001021956_Alter-Table-Garmentt-Left-Over-Buyer")]
+    partial class AlterTableGarmenttLeftOverBuyer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,60 +305,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AccountBanks");
-                });
-
-            modelBuilder.Entity("Com.DanLiris.Service.Core.Lib.Models.BICurrency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(32);
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
-
-                    b.Property<double?>("Rate");
-
-                    b.Property<string>("_CreatedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_CreatedUtc");
-
-                    b.Property<string>("_DeletedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_DeletedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_DeletedUtc");
-
-                    b.Property<bool>("_IsDeleted");
-
-                    b.Property<string>("_LastModifiedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_LastModifiedUtc");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BICurrencies");
                 });
 
             modelBuilder.Entity("Com.DanLiris.Service.Core.Lib.Models.Budget", b =>
@@ -1525,9 +1472,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(50);
 
-                    b.Property<string>("SwiftCode")
-                        .HasMaxLength(50);
-
                     b.Property<string>("_CreatedAgent")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -2383,9 +2327,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                     b.Property<string>("UId")
                         .HasMaxLength(255);
 
-                    b.Property<string>("Unit")
-                        .HasMaxLength(255);
-
                     b.Property<string>("_CreatedAgent")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -2444,12 +2385,8 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
 
                     b.Property<string>("Remark");
 
-                    b.Property<string>("SPPCode");
-
                     b.Property<string>("UId")
                         .HasMaxLength(255);
-
-                    b.Property<string>("Unit");
 
                     b.Property<string>("_CreatedAgent")
                         .IsRequired()

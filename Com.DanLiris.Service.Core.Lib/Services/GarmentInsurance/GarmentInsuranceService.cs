@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name", "Address", "Attention", "PhoneNumber", "BankName", "AccountNumber", "NPWP"
+                "Code", "Name", "Address", "Attention", "PhoneNumber", "BankName", "AccountNumber", "SwiftCode", "NPWP"
             };
             Query = QueryHelper<GarmentInsuranceModel>.Search(Query, SearchAttributes, keyword);
 
@@ -65,6 +65,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance
                 PhoneNumber = s.PhoneNumber,
                 BankName = s.BankName,
                 AccountNumber = s.AccountNumber, 
+                SwiftCode = s.SwiftCode,
                 NPWP = s.NPWP,
             });
 
