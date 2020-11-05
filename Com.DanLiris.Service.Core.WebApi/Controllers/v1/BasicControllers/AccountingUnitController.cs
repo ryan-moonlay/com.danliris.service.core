@@ -1,8 +1,9 @@
-﻿using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
+﻿using Com.DanLiris.Service.Core.Lib.Helpers;
+using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
 using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Models;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
-using Com.DanLiris.Service.Core.WebApi.Helpers;
+using Com.DanLiris.Service.Core.WebApi.Utils;
 using Com.Moonlay.NetCore.Lib.Service;
 using CsvHelper;
 using CsvHelper.TypeConversion;
@@ -15,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using General = Com.DanLiris.Service.Core.WebApi.Helpers.General;
 
 namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 {
@@ -53,7 +55,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                 var result = _service.ReadModel(page, size, order, select, keyword, filter);
 
                 var response =
-                    new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(result.Data, page, size, result.Count, result.Data.Count, result.Order, result.Selected);
+                    new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(null, result.Data, page, size, result.Count, result.Data.Count, result.Order, result.Selected);
                 return Ok(result);
             }
             catch (Exception e)
@@ -76,7 +78,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                 var response = new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
                 return Created(string.Concat(Request.Path, "/", 0), response);
             }
-            catch (ServiceValidationExeption e)
+            catch (ServiceValidationException e)
             {
                 var response = new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.BAD_REQUEST_MESSAGE).Fail(e);
                 return BadRequest(response);
@@ -102,7 +104,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                 }
                 else
                 {
-                    var response = new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(model);
+                    var response = new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(null, model);
                     return Ok(response);
                 }
             }
@@ -131,7 +133,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 
                 return NoContent();
             }
-            catch (ServiceValidationExeption e)
+            catch (ServiceValidationException e)
             {
                 var response = new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.BAD_REQUEST_MESSAGE).Fail(e);
                 return BadRequest(response);
