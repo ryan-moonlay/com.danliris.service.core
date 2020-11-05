@@ -29,6 +29,8 @@ using System.Text;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentCourier;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance;
 using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
+using Com.DanLiris.Service.Core.Lib.Services.AccountingCategory;
+using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
 
 namespace Com.DanLiris.Service.Core.WebApi
 {
@@ -110,6 +112,8 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentCourierService, GarmentCourierService>()
                 .AddTransient<IGarmentInsuranceService, GarmentInsuranceService>()
                 .AddTransient<IBICurrencyService, BICurrencyService>()
+                .AddTransient<IAccountingCategoryService, AccountingCategoryService>()
+                .AddTransient<IAccountingUnitService, AccountingUnitService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
