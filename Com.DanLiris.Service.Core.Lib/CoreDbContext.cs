@@ -83,6 +83,8 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<GarmentCourierModel> GarmentCouriers { get; set; }
         public DbSet<GarmentInsuranceModel> GarmentInsurances { get; set; }
         public DbSet<BICurrency> BICurrencies { get; set; }
+        public DbSet<AccountingUnit> AccountingUnits { get; set; }
+        public DbSet<AccountingCategory> AccountingCategories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
