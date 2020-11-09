@@ -90,7 +90,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
@@ -115,7 +115,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpPut("{Id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] AccountingUnit model)
         {
             try
@@ -145,7 +145,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
