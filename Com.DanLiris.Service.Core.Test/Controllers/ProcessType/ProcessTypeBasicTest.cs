@@ -48,6 +48,9 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.ProcessTypeTest
             {
                 Name = string.Format("TEST {0}", guid),
                 Code = string.Format("TEST {0}", guid),
+                Unit ="Unit",
+                SPPCode = "SPP",
+                //Unit = string.Format("TEST {0}", guid),
                 Remark = "REMARK",
             };
         }

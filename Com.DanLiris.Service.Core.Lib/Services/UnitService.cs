@@ -112,6 +112,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             unitVM.Description = unit.Description;
             unitVM.COACode = unit.COACode;
             unitVM.VBDocumentLayoutOrder = unit.VBDocumentLayoutOrder;
+            unitVM.AccountingUnitId = unit.AccountingUnitId;
             
             return unitVM;
         }
@@ -137,6 +138,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             unit.Name = unitVM.Name;
             unit.Description = unitVM.Description;
             unit.COACode = unitVM.COACode;
+            unit.AccountingUnitId = unitVM.AccountingUnitId;
 
             return unit;
         }

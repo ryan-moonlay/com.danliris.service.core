@@ -19,5 +19,6 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
         public string StockCOA { get; set; }
         public string LocalDebtCOA { get; set; }
         public string ImportDebtCOA { get; set; }
+        public int AccountingCategoryId { get; set; }
     }
 }

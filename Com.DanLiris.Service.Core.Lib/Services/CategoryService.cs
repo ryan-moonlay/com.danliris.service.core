@@ -197,6 +197,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryVM.PurchasingCOA = category.PurchasingCOA;
             categoryVM.StockCOA = category.StockCOA;
             categoryVM.codeRequirement = category.CodeRequirement;
+            categoryVM.AccountingCategoryId = category.AccountingCategoryId;
 
             return categoryVM;
         }
@@ -222,6 +223,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             category.LocalDebtCOA = categoryVM.LocalDebtCOA;
             category.PurchasingCOA = categoryVM.PurchasingCOA;
             category.StockCOA = categoryVM.StockCOA;
+            category.AccountingCategoryId = categoryVM.AccountingCategoryId;
 
             return category;
         }

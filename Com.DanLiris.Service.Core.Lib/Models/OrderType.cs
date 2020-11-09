@@ -15,6 +15,10 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Code { get; set; }
         [MaxLength(255)]
         public string Name { get; set; }
+
+        [MaxLength(255)]
+        public string Unit { get; set; }
+
         [MaxLength(1000)]
         public string Remark { get; set; }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -29,6 +33,11 @@ namespace Com.DanLiris.Service.Core.Lib.Models
             {
                 if (service.DbSet.Count(r => r.Id != this.Id && r.Name.Equals(this.Name) && r._IsDeleted.Equals(false)) > 0)
                     yield return new ValidationResult("Nama Jenis Order sudah ada", new List<string> { "Name" });
+            }
+
+            if (string.IsNullOrWhiteSpace(this.Unit))
+            {
+                yield return new ValidationResult("Unit harus diisi", new List<string> { "Unit" });
             }
 
         }

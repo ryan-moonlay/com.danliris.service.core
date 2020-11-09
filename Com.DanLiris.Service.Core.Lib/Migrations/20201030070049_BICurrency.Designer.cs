@@ -11,9 +11,10 @@ using System;
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201030070049_BICurrency")]
+    partial class BICurrency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,116 +307,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                     b.ToTable("AccountBanks");
                 });
 
-            modelBuilder.Entity("Com.DanLiris.Service.Core.Lib.Models.AccountingCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("_CreatedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_CreatedUtc");
-
-                    b.Property<string>("_DeletedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_DeletedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_DeletedUtc");
-
-                    b.Property<bool>("_IsDeleted");
-
-                    b.Property<string>("_LastModifiedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_LastModifiedUtc");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccountingCategories");
-                });
-
-            modelBuilder.Entity("Com.DanLiris.Service.Core.Lib.Models.AccountingUnit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Active");
-
-                    b.Property<string>("Code")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("DivisionCode")
-                        .HasMaxLength(100);
-
-                    b.Property<int>("DivisionId");
-
-                    b.Property<string>("DivisionName")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("_CreatedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_CreatedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_CreatedUtc");
-
-                    b.Property<string>("_DeletedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_DeletedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_DeletedUtc");
-
-                    b.Property<bool>("_IsDeleted");
-
-                    b.Property<string>("_LastModifiedAgent")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<string>("_LastModifiedBy")
-                        .IsRequired()
-                        .HasMaxLength(255);
-
-                    b.Property<DateTime>("_LastModifiedUtc");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccountingUnits");
-                });
-
             modelBuilder.Entity("Com.DanLiris.Service.Core.Lib.Models.BICurrency", b =>
                 {
                     b.Property<int>("Id")
@@ -661,8 +552,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccountingCategoryId");
 
                     b.Property<bool>("Active");
 
@@ -3175,8 +3064,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccountingUnitId");
 
                     b.Property<bool>("Active");
 
