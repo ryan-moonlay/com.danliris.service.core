@@ -23,7 +23,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
     [Produces("application/json")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/master/accounting-units")]
-    [Authorize]
+    //[Authorize]
     public class AccountingUnitController : Controller
     {
         private const string ContentType = "application/vnd.openxmlformats";
