@@ -5,9 +5,12 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
 {
     public class CategoryViewModel : BasicViewModelOld
     {
+        public int Id { get; set; }
         public string code { get; set; }
+        public string Code { get; set; }
 
         public string name { get; set; }
+        public string Name { get; set; }
 
         public string codeRequirement { get; set; }
 
@@ -19,5 +22,6 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
         public string StockCOA { get; set; }
         public string LocalDebtCOA { get; set; }
         public string ImportDebtCOA { get; set; }
+        public int AccountingCategoryId { get; set; }
     }
 }

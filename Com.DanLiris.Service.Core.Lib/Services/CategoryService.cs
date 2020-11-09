@@ -191,12 +191,16 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryVM._updatedBy = category._LastModifiedBy;
             categoryVM._updateAgent = category._LastModifiedAgent;
             categoryVM.code = category.Code;
+            categoryVM.Code = category.Code;
             categoryVM.name = category.Name;
+            categoryVM.Name = category.Name;
             categoryVM.ImportDebtCOA = category.ImportDebtCOA;
             categoryVM.LocalDebtCOA = category.LocalDebtCOA;
             categoryVM.PurchasingCOA = category.PurchasingCOA;
             categoryVM.StockCOA = category.StockCOA;
             categoryVM.codeRequirement = category.CodeRequirement;
+            categoryVM.AccountingCategoryId = category.AccountingCategoryId;
+            categoryVM.Id = category.Id;
 
             return categoryVM;
         }
@@ -222,6 +226,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             category.LocalDebtCOA = categoryVM.LocalDebtCOA;
             category.PurchasingCOA = categoryVM.PurchasingCOA;
             category.StockCOA = categoryVM.StockCOA;
+            category.AccountingCategoryId = categoryVM.AccountingCategoryId;
 
             return category;
         }

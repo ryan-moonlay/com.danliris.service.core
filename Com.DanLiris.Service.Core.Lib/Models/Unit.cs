@@ -32,6 +32,7 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         [MaxLength(50)]
         public string COACode { get; set; }
         public int VBDocumentLayoutOrder { get; set; }
+        public int AccountingUnitId { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -42,6 +43,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
             if (string.IsNullOrWhiteSpace(this.Name))
                 validationResult.Add(new ValidationResult("Name is required", new List<string> { "name" }));
+
+            if (AccountingUnitId <= 0)
+                validationResult.Add(new ValidationResult("Unit Pembukuan is required", new List<string> { "AccountingUnitId" }));
 
             if (validationResult.Count.Equals(0))
             {
