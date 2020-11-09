@@ -5,6 +5,7 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
 {
     public class CategoryViewModel : BasicViewModelOld
     {
+        public int Id { get; set; }
         public string code { get; set; }
 
         public string name { get; set; }
