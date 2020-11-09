@@ -16,6 +16,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         [StringLength(500)]
         public string Name { get; set; }
 
+        public int AccountingLayoutIndex { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             List<ValidationResult> validationResult = new List<ValidationResult>();
