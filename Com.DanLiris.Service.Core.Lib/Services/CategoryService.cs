@@ -198,6 +198,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryVM.StockCOA = category.StockCOA;
             categoryVM.codeRequirement = category.CodeRequirement;
             categoryVM.AccountingCategoryId = category.AccountingCategoryId;
+            categoryVM.Id = category.Id;
 
             return categoryVM;
         }
