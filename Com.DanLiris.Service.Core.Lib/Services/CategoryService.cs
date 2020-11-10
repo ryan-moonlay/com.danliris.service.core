@@ -87,6 +87,15 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
 
+        public Tuple<List<Category>, int> ReadModelByAccountingCategoryId(int id)
+        {
+            var context = this.DbContext.Categories;
+
+            var result = context.Where(x => x.AccountingCategoryId == id).ToList();
+
+            return Tuple.Create(result, result.Count());
+        }
+
         public  Tuple<List<CategoryViewModel>, int, Dictionary<string, string>> JoinDivision(int Page = 1, int Size = 25, string Order = "{}", string Keyword = "", string Filter = "{}")
         {
             //IQueryable<Category> Query = this.DbContext.Categories;

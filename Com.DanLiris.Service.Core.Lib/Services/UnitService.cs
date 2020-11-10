@@ -260,5 +260,12 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 Name = x.Name
             }).ToList();
         }
+
+        public List<Unit> GetUnitsByAccountingUnitId(int id)
+        {
+            var _dbset = this.DbSet;
+
+            return _dbset.Where(x => x.AccountingUnitId == id).ToList();
+        }
     }
 }
