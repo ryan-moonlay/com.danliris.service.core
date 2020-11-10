@@ -46,7 +46,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         {
             try
             {
-                Tuple<List<Category>, int> Data = Service.ReadModelByAccountingCategoryId(id);
+                List<Category> Data = Service.ReadModelByAccountingCategoryId(id);
 
                 Dictionary<string, object> Result =
                     new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE)
