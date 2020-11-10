@@ -77,6 +77,8 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.UnitTest
         {
             Lib.Models.Unit data = new Lib.Models.Unit()
             {
+                Id = 1,
+                AccountingUnitId = 1,
                 Code = ""
             };
             dbContext.Units.Add(data);
@@ -185,5 +187,42 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.UnitTest
             Assert.Equal((int)HttpStatusCode.InternalServerError, statusCode);
         }
 
+        [Fact]
+        public void GetGetUnitsByAccountingUnitId_Return_OK()
+        {
+            //Setup
+            CoreDbContext dbContext = GetDbContext(GetCurrentAsyncMethod());
+            Mock<IServiceProvider> serviceProviderMock = GetServiceProvider();
+
+            UnitService service = new UnitService(serviceProviderMock.Object);
+
+            serviceProviderMock.Setup(s => s.GetService(typeof(UnitService))).Returns(service);
+            serviceProviderMock.Setup(s => s.GetService(typeof(CoreDbContext))).Returns(dbContext);
+
+            Lib.Models.Unit testData = GetTestData(dbContext);
+
+            //Act
+            IActionResult response = GetController(service).GetUnitsByAccountingUnitId(testData.Id);
+
+            //Assert
+            int statusCode = this.GetStatusCode(response);
+            Assert.Equal((int)HttpStatusCode.OK, statusCode);
+        }
+
+        [Fact]
+        public void GetGetUnitsByAccountingUnitId_Return_InternalServerError()
+        {
+            //Setup
+            Mock<IServiceProvider> serviceProviderMock = GetServiceProvider();
+            UnitService service = new UnitService(serviceProviderMock.Object);
+            serviceProviderMock.Setup(s => s.GetService(typeof(UnitService))).Returns(service);
+
+            //Act
+            IActionResult response = GetController(service).GetUnitsByAccountingUnitId(1);
+
+            //Assert
+            int statusCode = this.GetStatusCode(response);
+            Assert.Equal((int)HttpStatusCode.InternalServerError, statusCode);
+        }
     }
 }
