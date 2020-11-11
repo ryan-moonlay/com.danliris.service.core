@@ -77,6 +77,24 @@ namespace Com.DanLiris.Service.Core.Test.AutoMapperProfiles
         }
 
         [Fact]
+        public void Should_Success_GarmentCourierProfile()
+        {
+            var mapper = new MapperConfiguration(configuration => configuration.AddProfile<GarmentCourierProfile>()).CreateMapper();
+            var model = new GarmentCourierModel();
+            var vm = mapper.Map<GarmentCourierViewModel>(model);
+            Assert.NotNull(vm);
+        }
+
+        [Fact]
+        public void Should_Success_GarmentInsuranceProfile()
+        {
+            var mapper = new MapperConfiguration(configuration => configuration.AddProfile<GarmentInsuranceProfile>()).CreateMapper();
+            var model = new GarmentInsuranceModel();
+            var vm = mapper.Map<GarmentInsuranceViewModel>(model);
+            Assert.NotNull(vm);
+        }
+
+        [Fact]
         public void Should_Success_MachineSpinningProfile()
         {
             var mapper = new MapperConfiguration(configuration => configuration.AddProfile<MachineSpinningProfile>()).CreateMapper();
