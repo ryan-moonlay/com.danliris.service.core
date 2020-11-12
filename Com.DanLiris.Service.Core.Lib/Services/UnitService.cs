@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "Id", "Code", "Division", "Name", "COACode"
+                "Id", "Code", "Division", "Name", "COACode", "AccountingUnitId"
             };
 
             Query = Query
@@ -57,7 +57,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     DivisionCode = u.DivisionCode,
                     DivisionName = u.DivisionName,
                     Name = u.Name,
-                    COACode = u.COACode
+                    COACode = u.COACode,
+                    AccountingUnitId = u.AccountingUnitId
                 }).Where(x => x.Id != 37);
 
             /* Order */
