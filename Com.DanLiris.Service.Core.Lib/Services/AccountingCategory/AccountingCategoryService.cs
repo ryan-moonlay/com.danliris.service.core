@@ -87,7 +87,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
             existingModel.Code = model.Code;
             existingModel.Name = model.Name;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
-            _dbContext.AccountingCategories.Update(model);
+            _dbContext.AccountingCategories.Update(existingModel);
             return _dbContext.SaveChangesAsync();
         }
 
