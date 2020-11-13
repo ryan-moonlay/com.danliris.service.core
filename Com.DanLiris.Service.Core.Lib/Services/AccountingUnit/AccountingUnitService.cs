@@ -91,7 +91,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
             existingModel.DivisionId = model.DivisionId;
             existingModel.DivisionName = model.DivisionName;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
-            _dbContext.AccountingUnits.Update(model);
+            _dbContext.AccountingUnits.Update(existingModel);
             return _dbContext.SaveChangesAsync();
         }
 
