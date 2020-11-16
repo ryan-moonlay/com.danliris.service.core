@@ -12,23 +12,23 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer
+namespace Com.DanLiris.Service.Core.Lib.Services.GarmentAdditionalCharges
 {
-    public class GarmentLeftoverWarehouseBuyerService : IGarmentLeftoverWarehouseBuyerService
+    public class GarmentAdditionalChargesService : IGarmentAdditionalChargesService
     {
         private const string _UserAgent = "core-service";
-        protected DbSet<GarmentLeftoverWarehouseBuyerModel> _DbSet;
+        protected DbSet<GarmentAdditionalChargesModel> _DbSet;
         protected IIdentityService _IdentityService;
         public CoreDbContext _DbContext;
 
-        public GarmentLeftoverWarehouseBuyerService(IServiceProvider serviceProvider, CoreDbContext dbContext)
+        public GarmentAdditionalChargesService(IServiceProvider serviceProvider, CoreDbContext dbContext)
         {
             _DbContext = dbContext;
-            _DbSet = dbContext.Set<GarmentLeftoverWarehouseBuyerModel>();
+            _DbSet = dbContext.Set<GarmentAdditionalChargesModel>();
             _IdentityService = serviceProvider.GetService<IIdentityService>();
         }
 
-        public async Task<int> CreateAsync(GarmentLeftoverWarehouseBuyerModel model)
+        public async Task<int> CreateAsync(GarmentAdditionalChargesModel model)
         {
             model.FlagForCreate(_IdentityService.Username, _UserAgent);
             model._LastModifiedAgent = model._CreatedAgent;
@@ -39,48 +39,41 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer
             return await _DbContext.SaveChangesAsync();
         }
 
-        public ReadResponse<GarmentLeftoverWarehouseBuyerModel> Read(int page, int size, string order, List<string> select, string keyword, string filter)
+        public ReadResponse<GarmentAdditionalChargesModel> Read(int page, int size, string order, List<string> select, string keyword, string filter)
         {
-            IQueryable<GarmentLeftoverWarehouseBuyerModel> Query = _DbSet;
+            IQueryable<GarmentAdditionalChargesModel> Query = _DbSet;
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name", "Address", "PhoneNumber", "NIK", "NPWP", "WPName", "KaberType"
+                "Name"
             };
-            Query = QueryHelper<GarmentLeftoverWarehouseBuyerModel>.Search(Query, SearchAttributes, keyword);
+            Query = QueryHelper<GarmentAdditionalChargesModel>.Search(Query, SearchAttributes, keyword);
 
             Dictionary<string, object> FilterDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(filter);
-            Query = QueryHelper<GarmentLeftoverWarehouseBuyerModel>.Filter(Query, FilterDictionary);
+            Query = QueryHelper<GarmentAdditionalChargesModel>.Filter(Query, FilterDictionary);
 
             Dictionary<string, string> OrderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
-            Query = QueryHelper<GarmentLeftoverWarehouseBuyerModel>.Order(Query, OrderDictionary);
+            Query = QueryHelper<GarmentAdditionalChargesModel>.Order(Query, OrderDictionary);
 
-            Query = Query.Select(s => new GarmentLeftoverWarehouseBuyerModel
+            Query = Query.Select(s => new GarmentAdditionalChargesModel
             {
                 Id = s.Id,
-                Code = s.Code,
                 Name = s.Name,
-                Address = s.Address,
-                PhoneNumber = s.PhoneNumber,
-                NIK = s.NIK,
-                NPWP = s.NPWP,
-                WPName = s.WPName,
-                KaberType = s.KaberType,
             });
 
-            Pageable<GarmentLeftoverWarehouseBuyerModel> pageable = new Pageable<GarmentLeftoverWarehouseBuyerModel>(Query, page - 1, size);
-            List<GarmentLeftoverWarehouseBuyerModel> Data = pageable.Data.ToList();
+            Pageable<GarmentAdditionalChargesModel> pageable = new Pageable<GarmentAdditionalChargesModel>(Query, page - 1, size);
+            List<GarmentAdditionalChargesModel> Data = pageable.Data.ToList();
 
             int TotalData = pageable.TotalCount;
-            return new ReadResponse<GarmentLeftoverWarehouseBuyerModel>(Data, TotalData, OrderDictionary, new List<string>());
+            return new ReadResponse<GarmentAdditionalChargesModel>(Data, TotalData, OrderDictionary, new List<string>());
         }
 
-        public async Task<GarmentLeftoverWarehouseBuyerModel> ReadByIdAsync(int id)
+        public async Task<GarmentAdditionalChargesModel> ReadByIdAsync(int id)
         {
             return await _DbSet.Where(w => w.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<int> UpdateAsync(int id, GarmentLeftoverWarehouseBuyerModel model)
+        public async Task<int> UpdateAsync(int id, GarmentAdditionalChargesModel model)
         {
             model.FlagForUpdate(_IdentityService.Username, _UserAgent);
             _DbSet.Update(model);
@@ -95,7 +88,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer
             return await _DbContext.SaveChangesAsync();
         }
 
-        public bool CheckExisting(Expression<Func<GarmentLeftoverWarehouseBuyerModel, bool>> filter)
+        public bool CheckExisting(Expression<Func<GarmentAdditionalChargesModel, bool>> filter)
         {
             var count = _DbSet.Where(filter).Count();
 
