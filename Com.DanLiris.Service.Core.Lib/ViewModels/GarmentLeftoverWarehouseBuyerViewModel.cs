@@ -19,6 +19,9 @@ namespace Com.DanLiris.Service.Core.Lib.ViewModels
         public string NPWP { get; set; }
         public string WPName { get; set; }
 
+        [MaxLength(20)]
+        public string KaberType { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             IGarmentLeftoverWarehouseBuyerService service = (IGarmentLeftoverWarehouseBuyerService)validationContext.GetService(typeof(IGarmentLeftoverWarehouseBuyerService));

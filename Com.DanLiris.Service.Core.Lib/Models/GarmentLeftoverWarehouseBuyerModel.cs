@@ -25,5 +25,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
         [MaxLength(50)]
         public string WPName { get; set; }
+
+        [MaxLength(20)]
+        public string KaberType { get; set; }
     }
 }
