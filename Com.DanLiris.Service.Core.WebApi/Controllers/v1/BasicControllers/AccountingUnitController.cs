@@ -2,7 +2,7 @@
 using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
 using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Models;
-using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
+using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
 using Com.DanLiris.Service.Core.WebApi.Utils;
 using Com.Moonlay.NetCore.Lib.Service;
 using CsvHelper;
@@ -22,22 +22,22 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 {
     [Produces("application/json")]
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/master/bi-currencies")]
-    [Authorize]
-    public class BICurrencyController : Controller
+    [Route("v{version:apiVersion}/master/accounting-units")]
+    //[Authorize]
+    public class AccountingUnitController : Controller
     {
         private const string ContentType = "application/vnd.openxmlformats";
-        private readonly string FileName = string.Concat("Error Log - ", typeof(BICurrency).Name, " ", DateTime.Now.ToString("dd MMM yyyy"), ".csv");
+        private readonly string FileName = string.Concat("Error Log - ", typeof(AccountingUnit).Name, " ", DateTime.Now.ToString("dd MMM yyyy"), ".csv");
         private const string ApiVersion = "1.0.0";
         private readonly IIdentityService _identityService;
         private readonly IValidateService _validateService;
-        private readonly IBICurrencyService _service;
+        private readonly IAccountingUnitService _service;
 
-        public BICurrencyController(IServiceProvider serviceProvider)
+        public AccountingUnitController(IServiceProvider serviceProvider)
         {
             _identityService = serviceProvider.GetService<IIdentityService>();
             _validateService = serviceProvider.GetService<IValidateService>();
-            _service = serviceProvider.GetService<IBICurrencyService>();
+            _service = serviceProvider.GetService<IAccountingUnitService>();
         }
 
         private void VerifyUser()
@@ -56,7 +56,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 
                 var response =
                     new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(null, result.Data, page, size, result.Count, result.Data.Count, result.Order, result.Selected);
-                return Ok(result);
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] BICurrency model)
+        public async Task<ActionResult> Post([FromBody] AccountingUnit model)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
@@ -115,8 +115,8 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] BICurrency model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] AccountingUnit model)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             try
@@ -194,10 +194,10 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                         var csv = new CsvReader(reader);
                         csv.Configuration.IgnoreQuotes = false;
                         csv.Configuration.Delimiter = ",";
-                        csv.Configuration.RegisterClassMap<BICurrencyMap>();
+                        csv.Configuration.RegisterClassMap<AccountingUnitMap>();
                         csv.Configuration.HeaderValidated = null;
 
-                        var data = csv.GetRecords<BICurrency>().ToList();
+                        var data = csv.GetRecords<AccountingUnit>().ToList();
 
                         Tuple<bool, List<object>> Validated = _service.UploadValidate(data, Request.Form.ToList());
 
@@ -207,7 +207,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                         {
                             await _service.UploadData(data);
 
-                            var response =new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
+                            var response = new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
                             return Created(HttpContext.Request.Path, response);
 
                         }

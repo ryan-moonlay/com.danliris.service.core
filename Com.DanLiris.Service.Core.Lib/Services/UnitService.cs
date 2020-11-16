@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "Id", "Code", "Division", "Name", "COACode"
+                "Id", "Code", "Division", "Name", "COACode", "AccountingUnitId"
             };
 
             Query = Query
@@ -57,7 +57,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     DivisionCode = u.DivisionCode,
                     DivisionName = u.DivisionName,
                     Name = u.Name,
-                    COACode = u.COACode
+                    COACode = u.COACode,
+                    AccountingUnitId = u.AccountingUnitId
                 }).Where(x => x.Id != 37);
 
             /* Order */
@@ -112,6 +113,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             unitVM.Description = unit.Description;
             unitVM.COACode = unit.COACode;
             unitVM.VBDocumentLayoutOrder = unit.VBDocumentLayoutOrder;
+            unitVM.AccountingUnitId = unit.AccountingUnitId;
             
             return unitVM;
         }
@@ -137,6 +139,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             unit.Name = unitVM.Name;
             unit.Description = unitVM.Description;
             unit.COACode = unitVM.COACode;
+            unit.AccountingUnitId = unitVM.AccountingUnitId;
 
             return unit;
         }
@@ -257,6 +260,13 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 Description = x.Description,
                 Name = x.Name
             }).ToList();
+        }
+
+        public List<Unit> GetUnitsByAccountingUnitId(int id)
+        {
+            var _dbset = this.DbSet;
+
+            return _dbset.Where(x => x.AccountingUnitId == id).ToList();
         }
     }
 }

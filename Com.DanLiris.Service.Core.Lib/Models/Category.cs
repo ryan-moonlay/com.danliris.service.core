@@ -32,6 +32,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         [MaxLength(50)]
         public string ImportDebtCOA { get; set; }
 
+        public int AccountingCategoryId { get; set; }
+
         //public Division Division { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -43,6 +45,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
             if (string.IsNullOrWhiteSpace(this.Name))
                 validationResult.Add(new ValidationResult("Name is required", new List<string> { "name" }));
+
+            if (AccountingCategoryId <= 0)
+                validationResult.Add(new ValidationResult("Kategori Pembukuan is required", new List<string> { "AccountingCategoryId" }));
 
             if (validationResult.Count.Equals(0))
             {

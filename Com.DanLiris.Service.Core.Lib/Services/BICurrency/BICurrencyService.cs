@@ -169,7 +169,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BICurrency
                 MoonlayEntityExtension.FlagForCreate(element, _identityService.Username, UserAgent);
                 return element;
             }).ToList();
-            _dbContext.BICurrencies.UpdateRange(data);
+            _dbContext.BICurrencies.AddRange(data);
             return _dbContext.SaveChangesAsync();
         }
     }

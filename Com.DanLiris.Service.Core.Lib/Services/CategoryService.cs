@@ -43,7 +43,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "_id", "code", "name", "PurchasingCOA", "StockCOA", "LocalDebtCOA", "ImportDebtCOA"
+                "_id", "code", "name", "PurchasingCOA", "StockCOA", "LocalDebtCOA", "ImportDebtCOA", "AccountingCategoryId"
             }; 
 
             Query = Query
@@ -55,7 +55,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     PurchasingCOA = b.PurchasingCOA,
                     StockCOA = b.StockCOA,
                     LocalDebtCOA = b.LocalDebtCOA,
-                    ImportDebtCOA = b.ImportDebtCOA
+                    ImportDebtCOA = b.ImportDebtCOA,
+                    AccountingCategoryId = b.AccountingCategoryId
                 });
 
             /* Order */
@@ -85,6 +86,15 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             int TotalData = pageable.TotalCount;
 
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
+        }
+
+        public List<Category> ReadModelByAccountingCategoryId(int id)
+        {
+            var context = this.DbContext.Categories;
+
+            var result = context.Where(x => x.AccountingCategoryId == id).ToList();
+
+            return result;
         }
 
         public  Tuple<List<CategoryViewModel>, int, Dictionary<string, string>> JoinDivision(int Page = 1, int Size = 25, string Order = "{}", string Keyword = "", string Filter = "{}")
@@ -191,12 +201,16 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryVM._updatedBy = category._LastModifiedBy;
             categoryVM._updateAgent = category._LastModifiedAgent;
             categoryVM.code = category.Code;
+            categoryVM.Code = category.Code;
             categoryVM.name = category.Name;
+            categoryVM.Name = category.Name;
             categoryVM.ImportDebtCOA = category.ImportDebtCOA;
             categoryVM.LocalDebtCOA = category.LocalDebtCOA;
             categoryVM.PurchasingCOA = category.PurchasingCOA;
             categoryVM.StockCOA = category.StockCOA;
             categoryVM.codeRequirement = category.CodeRequirement;
+            categoryVM.AccountingCategoryId = category.AccountingCategoryId;
+            categoryVM.Id = category.Id;
 
             return categoryVM;
         }
@@ -222,6 +236,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             category.LocalDebtCOA = categoryVM.LocalDebtCOA;
             category.PurchasingCOA = categoryVM.PurchasingCOA;
             category.StockCOA = categoryVM.StockCOA;
+            category.AccountingCategoryId = categoryVM.AccountingCategoryId;
 
             return category;
         }
