@@ -161,6 +161,12 @@ namespace Com.DanLiris.Service.Core.WebApi
                     };
                 });
 
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetValue<string>("RedisConnection") ?? Configuration["RedisConnection"];
+                options.InstanceName = Configuration.GetValue<string>("RedisConnectionName") ?? Configuration["RedisConnectionName"];
+            });
+
             services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
             {
                 builder.AllowAnyOrigin()
