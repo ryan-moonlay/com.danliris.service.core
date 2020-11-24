@@ -12,6 +12,8 @@ using CsvHelper.Configuration;
 using System.Dynamic;
 using Com.DanLiris.Service.Core.Lib.Interfaces;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Com.DanLiris.Service.Core.Lib.Services
 {
@@ -22,6 +24,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
         public DivisionService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _cache = serviceProvider.GetService<IDistributedCache>();
         }
 
         public override Tuple<List<Division>, int, Dictionary<string, string>, List<string>> ReadModel(int Page = 1, int Size = 25, string Order = "{}", List<string> Select = null, string Keyword = null,string Filter="{}")
@@ -83,6 +86,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
             int TotalData = pageable.TotalCount;
 
+            SetCache();
+
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
 
@@ -108,6 +113,12 @@ namespace Com.DanLiris.Service.Core.Lib.Services
         {
             "Nama", "Deskripsi"
         };
+        private readonly IDistributedCache _cache;
+        protected override void SetCache()
+        {
+            var data = DbContext.Divisions.ToList();
+            _cache.SetString("Division", JsonConvert.SerializeObject(data));
+        }
 
         public List<string> CsvHeader => Header;
 

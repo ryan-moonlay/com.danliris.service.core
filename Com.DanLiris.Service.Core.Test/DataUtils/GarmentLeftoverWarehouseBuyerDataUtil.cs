@@ -29,6 +29,7 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
                 NIK = $"NIK{guid}",
                 NPWP = $"NPWP{guid}",
                 WPName = $"WPName{guid}",
+                KaberType = $"KaberType{guid}",
             };
 
             return model;

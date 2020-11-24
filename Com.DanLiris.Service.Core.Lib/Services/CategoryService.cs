@@ -13,6 +13,8 @@ using CsvHelper.Configuration;
 using System.Dynamic;
 using Com.DanLiris.Service.Core.Lib.Interfaces;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Com.DanLiris.Service.Core.Lib.Services
 {
@@ -20,6 +22,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
     {
         public CategoryService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _cache = serviceProvider.GetService<IDistributedCache>();
         }
 
         public override Tuple<List<Category>, int, Dictionary<string, string>, List<string>> ReadModel(int Page = 1, int Size = 25, string Order = "{}", List<string> Select = null, string Keyword = null, string Filter = "{}")
@@ -84,6 +87,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             List<Category> Data = pageable.Data.ToList<Category>();
 
             int TotalData = pageable.TotalCount;
+
+            SetCache();
 
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
@@ -246,6 +251,13 @@ namespace Com.DanLiris.Service.Core.Lib.Services
         {
             "Kode", "Nama", "Kode Kebutuhan"
         };
+        private readonly IDistributedCache _cache;
+
+        protected override void SetCache()
+        {
+            var data = DbContext.Categories.ToList();
+            _cache.SetString("Category", JsonConvert.SerializeObject(data));
+        }
 
         public List<string> CsvHeader => Header;
 

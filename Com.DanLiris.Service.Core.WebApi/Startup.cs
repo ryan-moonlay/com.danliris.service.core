@@ -31,6 +31,7 @@ using Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance;
 using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingCategory;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentAdditionalCharges;
 
 namespace Com.DanLiris.Service.Core.WebApi
 {
@@ -114,6 +115,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IBICurrencyService, BICurrencyService>()
                 .AddTransient<IAccountingCategoryService, AccountingCategoryService>()
                 .AddTransient<IAccountingUnitService, AccountingUnitService>()
+                .AddTransient<IGarmentAdditionalChargesService, GarmentAdditionalChargesService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
@@ -158,6 +160,12 @@ namespace Com.DanLiris.Service.Core.WebApi
                         IssuerSigningKey = Key
                     };
                 });
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetValue<string>("RedisConnection") ?? Configuration["RedisConnection"];
+                options.InstanceName = Configuration.GetValue<string>("RedisConnectionName") ?? Configuration["RedisConnectionName"];
+            });
 
             services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
             {

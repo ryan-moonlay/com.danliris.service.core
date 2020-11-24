@@ -14,6 +14,8 @@ using CsvHelper.Configuration;
 using System.Dynamic;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Com.DanLiris.Service.Core.Lib.Services
 {
@@ -21,6 +23,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
     {
         public IncomeTaxService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _cache = serviceProvider.GetService<IDistributedCache>();
         }
 
         public override Tuple<List<IncomeTax>, int, Dictionary<string, string>, List<string>> ReadModel(int Page = 1, int Size = 25, string Order = "{}", List<string> Select = null, string Keyword = null,string Filter="{}")
@@ -83,6 +86,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
             int TotalData = pageable.TotalCount;
 
+            SetCache();
+
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
 
@@ -137,6 +142,13 @@ namespace Com.DanLiris.Service.Core.Lib.Services
         {
             "Nama", "Rate", "Deskripsi"
         };
+        private readonly IDistributedCache _cache;
+
+        protected override void SetCache()
+        {
+            var data = DbContext.IncomeTaxes.ToList();
+            _cache.SetString("IncomeTax", JsonConvert.SerializeObject(data));
+        }
 
         public List<string> CsvHeader => Header;
 
