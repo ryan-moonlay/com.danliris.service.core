@@ -85,6 +85,7 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<BICurrency> BICurrencies { get; set; }
         public DbSet<AccountingUnit> AccountingUnits { get; set; }
         public DbSet<AccountingCategory> AccountingCategories { get; set; }
+        public DbSet<BudgetingCategory> BudgetingCategories { get; set; }
         public DbSet<GarmentAdditionalChargesModel> GarmentAdditionalCharges { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
