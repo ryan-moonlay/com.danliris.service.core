@@ -4,6 +4,7 @@ using Com.Moonlay.Models;
 using Com.Moonlay.NetCore.Lib;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -21,14 +22,22 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory
         private const string UserAgent = "core-service";
         private readonly CoreDbContext _dbContext;
         private readonly IIdentityService _identityService;
+        private readonly IDistributedCache _cache;
         private readonly IServiceProvider _serviceProvider;
 
         public BudgetingCategoryService(IServiceProvider serviceProvider)
         {
             _dbContext = serviceProvider.GetService<CoreDbContext>();
             _identityService = serviceProvider.GetService<IIdentityService>();
+            _cache = serviceProvider.GetService<IDistributedCache>();
 
             _serviceProvider = serviceProvider;
+        }
+
+        private void SetCache()
+        {
+            var data = _dbContext.BudgetingCategories.ToList();
+            _cache.SetString("BudgetingCategory", JsonConvert.SerializeObject(data));
         }
 
         private readonly List<string> _header = new List<string>()
@@ -38,19 +47,25 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory
 
         public List<string> CsvHeader => _header;
 
-        public Task<int> CreateModel(Models.BudgetingCategory model)
+        public async Task<int> CreateModel(Models.BudgetingCategory model)
         {
             MoonlayEntityExtension.FlagForCreate(model, _identityService.Username, UserAgent);
             _dbContext.BudgetingCategories.Add(model);
-            return _dbContext.SaveChangesAsync();
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
-        public Task<int> DeleteModel(int id)
+        public async Task<int> DeleteModel(int id)
         {
             var model = _dbContext.BudgetingCategories.FirstOrDefault(entity => entity.Id == id);
             MoonlayEntityExtension.FlagForDelete(model, _identityService.Username, UserAgent);
             _dbContext.BudgetingCategories.Update(model);
-            return _dbContext.SaveChangesAsync();
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
         public ReadResponse<Models.BudgetingCategory> ReadModel(int page = 1, int size = 25, string order = "{}", List<string> select = null, string keyword = null, string filter = "{}")
@@ -73,22 +88,27 @@ namespace Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory
             var data = pageable.Data.ToList();
 
             var totalData = pageable.TotalCount;
+            SetCache();
             return new ReadResponse<Models.BudgetingCategory>(data, totalData, orderDictionary, new List<string>());
         }
 
         public Task<Models.BudgetingCategory> ReadModelById(int id)
         {
+            SetCache();
             return _dbContext.BudgetingCategories.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
-        public Task<int> UpdateModel(int id, Models.BudgetingCategory model)
+        public async Task<int> UpdateModel(int id, Models.BudgetingCategory model)
         {
             var existingModel = _dbContext.BudgetingCategories.FirstOrDefault(entity => entity.Id == id);
             existingModel.Code = model.Code;
             existingModel.Name = model.Name;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
             _dbContext.BudgetingCategories.Update(existingModel);
-            return _dbContext.SaveChangesAsync();
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
         public Tuple<bool, List<object>> UploadValidate(List<Models.BudgetingCategory> data, List<KeyValuePair<string, StringValues>> body)
