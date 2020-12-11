@@ -23,7 +23,10 @@ namespace Com.DanLiris.Service.Core.Test.DataUtils
             GarmentTransactionTypeModel model = new GarmentTransactionTypeModel
             {
                 Code = $"Code{guid}",
-                Name = $"Name{guid}",              
+                Name = $"Name{guid}",
+                COAId = 1,
+                COACode = $"COACode{guid}",
+                COAName = $"COAName{guid}",
             };
 
             return model;
