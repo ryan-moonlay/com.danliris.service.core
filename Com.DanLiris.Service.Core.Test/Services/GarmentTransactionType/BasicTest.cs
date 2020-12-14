@@ -139,6 +139,9 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentTransactionType
             {
                 Code = data.Code,
                 Name = data.Name,
+                COAId = data.COAId,
+                COACode = data.COACode,
+                COAName = data.COAName,
             };
 
             var validationContext = new ValidationContext(viewModel, serviceProvider.Object, null);

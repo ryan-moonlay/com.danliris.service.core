@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentTransactionType
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name"
+                "Code", "Name", "COACode", "COAName"
             };
             Query = QueryHelper<GarmentTransactionTypeModel>.Search(Query, SearchAttributes, keyword);
 
@@ -60,6 +60,9 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentTransactionType
                 Id = s.Id,
                 Code = s.Code,
                 Name = s.Name,
+                COAId = s.COAId,
+                COACode = s.COACode,
+                COAName = s.COAName,
             });
 
             Pageable<GarmentTransactionTypeModel> pageable = new Pageable<GarmentTransactionTypeModel>(Query, page - 1, size);
