@@ -11,9 +11,10 @@ using System;
 namespace Com.DanLiris.Service.Core.Lib.Migrations
 {
     [DbContext(typeof(CoreDbContext))]
-    partial class CoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201202095609_BudgetingCategory")]
+    partial class BudgetingCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2172,14 +2173,6 @@ namespace Com.DanLiris.Service.Core.Lib.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
-
-                    b.Property<string>("COACode")
-                        .HasMaxLength(50);
-
-                    b.Property<int?>("COAId");
-
-                    b.Property<string>("COAName")
-                        .HasMaxLength(50);
 
                     b.Property<string>("Code")
                         .HasMaxLength(50);

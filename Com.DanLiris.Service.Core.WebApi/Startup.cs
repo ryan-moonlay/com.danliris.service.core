@@ -32,6 +32,7 @@ using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingCategory;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentAdditionalCharges;
+using Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory;
 
 namespace Com.DanLiris.Service.Core.WebApi
 {
@@ -115,6 +116,7 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IBICurrencyService, BICurrencyService>()
                 .AddTransient<IAccountingCategoryService, AccountingCategoryService>()
                 .AddTransient<IAccountingUnitService, AccountingUnitService>()
+                .AddTransient<IBudgetingCategoryService, BudgetingCategoryService>()
                 .AddTransient<IGarmentAdditionalChargesService, GarmentAdditionalChargesService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();

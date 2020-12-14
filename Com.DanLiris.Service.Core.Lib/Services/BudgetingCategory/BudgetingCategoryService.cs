@@ -15,9 +15,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
+namespace Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory
 {
-    public class AccountingCategoryService : IAccountingCategoryService
+    public class BudgetingCategoryService : IBudgetingCategoryService
     {
         private const string UserAgent = "core-service";
         private readonly CoreDbContext _dbContext;
@@ -25,7 +25,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
         private readonly IDistributedCache _cache;
         private readonly IServiceProvider _serviceProvider;
 
-        public AccountingCategoryService(IServiceProvider serviceProvider)
+        public BudgetingCategoryService(IServiceProvider serviceProvider)
         {
             _dbContext = serviceProvider.GetService<CoreDbContext>();
             _identityService = serviceProvider.GetService<IIdentityService>();
@@ -36,8 +36,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
 
         private void SetCache()
         {
-            var data = _dbContext.AccountingCategories.ToList();
-            _cache.SetString("AccountingCategory", JsonConvert.SerializeObject(data));
+            var data = _dbContext.BudgetingCategories.ToList();
+            _cache.SetString("BudgetingCategory", JsonConvert.SerializeObject(data));
         }
 
         private readonly List<string> _header = new List<string>()
@@ -47,66 +47,77 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
 
         public List<string> CsvHeader => _header;
 
-        public Task<int> CreateModel(Models.AccountingCategory model)
+        public async Task<int> CreateModel(Models.BudgetingCategory model)
         {
             MoonlayEntityExtension.FlagForCreate(model, _identityService.Username, UserAgent);
-            _dbContext.AccountingCategories.Add(model);
-            return _dbContext.SaveChangesAsync();
+            _dbContext.BudgetingCategories.Add(model);
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
-        public Task<int> DeleteModel(int id)
+        public async Task<int> DeleteModel(int id)
         {
-            var model = _dbContext.AccountingCategories.FirstOrDefault(entity => entity.Id == id);
+            var model = _dbContext.BudgetingCategories.FirstOrDefault(entity => entity.Id == id);
             MoonlayEntityExtension.FlagForDelete(model, _identityService.Username, UserAgent);
-            _dbContext.AccountingCategories.Update(model);
-            return _dbContext.SaveChangesAsync();
+            _dbContext.BudgetingCategories.Update(model);
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
-        public ReadResponse<Models.AccountingCategory> ReadModel(int page = 1, int size = 25, string order = "{}", List<string> select = null, string keyword = null, string filter = "{}")
+        public ReadResponse<Models.BudgetingCategory> ReadModel(int page = 1, int size = 25, string order = "{}", List<string> select = null, string keyword = null, string filter = "{}")
         {
-            var query = _dbContext.AccountingCategories.AsQueryable();
+            var query = _dbContext.BudgetingCategories.AsQueryable();
 
             var searchAttributes = new List<string>()
             {
                 "Code", "Name"
             };
-            query = QueryHelper<Models.AccountingCategory>.Search(query, searchAttributes, keyword);
+            query = QueryHelper<Models.BudgetingCategory>.Search(query, searchAttributes, keyword);
 
             var filterDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(filter);
-            query = QueryHelper<Models.AccountingCategory>.Filter(query, filterDictionary);
+            query = QueryHelper<Models.BudgetingCategory>.Filter(query, filterDictionary);
 
             var orderDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(order);
-            query = QueryHelper<Models.AccountingCategory>.Order(query, orderDictionary);
+            query = QueryHelper<Models.BudgetingCategory>.Order(query, orderDictionary);
 
-            var pageable = new Pageable<Models.AccountingCategory>(query, page - 1, size);
+            var pageable = new Pageable<Models.BudgetingCategory>(query, page - 1, size);
             var data = pageable.Data.ToList();
 
             var totalData = pageable.TotalCount;
-            return new ReadResponse<Models.AccountingCategory>(data, totalData, orderDictionary, new List<string>());
+            SetCache();
+            return new ReadResponse<Models.BudgetingCategory>(data, totalData, orderDictionary, new List<string>());
         }
 
-        public Task<Models.AccountingCategory> ReadModelById(int id)
+        public Task<Models.BudgetingCategory> ReadModelById(int id)
         {
-            return _dbContext.AccountingCategories.FirstOrDefaultAsync(entity => entity.Id == id);
+            SetCache();
+            return _dbContext.BudgetingCategories.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
-        public Task<int> UpdateModel(int id, Models.AccountingCategory model)
+        public async Task<int> UpdateModel(int id, Models.BudgetingCategory model)
         {
-            var existingModel = _dbContext.AccountingCategories.FirstOrDefault(entity => entity.Id == id);
+            var existingModel = _dbContext.BudgetingCategories.FirstOrDefault(entity => entity.Id == id);
             existingModel.Code = model.Code;
             existingModel.Name = model.Name;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
-            _dbContext.AccountingCategories.Update(existingModel);
-            return _dbContext.SaveChangesAsync();
+            _dbContext.BudgetingCategories.Update(existingModel);
+
+            await _dbContext.SaveChangesAsync();
+            SetCache();
+            return model.Id;
         }
 
-        public Tuple<bool, List<object>> UploadValidate(List<Models.AccountingCategory> data, List<KeyValuePair<string, StringValues>> body)
+        public Tuple<bool, List<object>> UploadValidate(List<Models.BudgetingCategory> data, List<KeyValuePair<string, StringValues>> body)
         {
             var errorList = new List<object>();
             var errorMessage = "";
             var valid = true;
 
-            foreach (Models.AccountingCategory categoryVM in data)
+            foreach (var categoryVM in data)
             {
                 errorMessage = "";
 
@@ -163,21 +174,21 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
             return Tuple.Create(valid, errorList);
         }
 
-        public Task<int> UploadData(List<Models.AccountingCategory> data)
+        public Task<int> UploadData(List<Models.BudgetingCategory> data)
         {
             data = data.Select(element =>
             {
                 MoonlayEntityExtension.FlagForCreate(element, _identityService.Username, UserAgent);
                 return element;
             }).ToList();
-            _dbContext.AccountingCategories.AddRange(data);
+            _dbContext.BudgetingCategories.AddRange(data);
             return _dbContext.SaveChangesAsync();
         }
     }
 
-    public class AccountingCategoryMap : ClassMap<Models.AccountingCategory>
+    public class BudgetingCategoryMap : ClassMap<Models.BudgetingCategory>
     {
-        public AccountingCategoryMap()
+        public BudgetingCategoryMap()
         {
             Map(b => b.Code).Index(0);
             Map(b => b.Name).Index(1);
