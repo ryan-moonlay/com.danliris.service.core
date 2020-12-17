@@ -94,7 +94,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
         protected override void SetCache()
         {
-            var data = DbContext.Categories.ToList();
+            var data = DbContext.Currencies.ToList();
             _cache.SetString("Currency", JsonConvert.SerializeObject(data));
         }
 
