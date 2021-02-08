@@ -3,11 +3,14 @@ using Com.DanLiris.Service.Core.Lib.Helpers.IdentityService;
 using Com.DanLiris.Service.Core.Lib.Helpers.ValidateService;
 using Com.DanLiris.Service.Core.Lib.Models;
 using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
+using Com.DanLiris.Service.Core.Lib.Services.IBCurrency;
 using Com.DanLiris.Service.Core.WebApi.Utils;
 using Com.Moonlay.NetCore.Lib.Service;
 using CsvHelper;
+using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using General = Com.DanLiris.Service.Core.WebApi.Helpers.General;
 
@@ -31,13 +35,13 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         private const string ApiVersion = "1.0.0";
         private readonly IIdentityService _identityService;
         private readonly IValidateService _validateService;
-        private readonly IBICurrencyService _service;
+        private readonly IIBCurrencyService _service;
 
         public BICurrencyController(IServiceProvider serviceProvider)
         {
             _identityService = serviceProvider.GetService<IIdentityService>();
             _validateService = serviceProvider.GetService<IValidateService>();
-            _service = serviceProvider.GetService<IBICurrencyService>();
+            _service = serviceProvider.GetService<IIBCurrencyService>();
         }
 
         private void VerifyUser()
@@ -52,28 +56,37 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         {
             try
             {
-                var result = _service.ReadModel(page, size, order, select, keyword, filter);
-
-                var response =
-                    new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE).Ok(null, result.Data, page, size, result.Count, result.Data.Count, result.Order, result.Selected);
-                return Ok(result);
+                var result = _service.Read(keyword, page, size, order);
+                return Ok(new
+                {
+                    apiVersion = ApiVersion,
+                    statusCode = General.OK_STATUS_CODE,
+                    message = General.OK_MESSAGE,
+                    data = result.Data,
+                    info = new
+                    {
+                        total = result.Total,
+                        page,
+                        size,
+                        count = result.Data.Count
+                    }
+                });
             }
             catch (Exception e)
             {
-                var response = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message).Fail();
-                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, response);
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, e.Message + " " + e.StackTrace);
             }
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] BICurrency model)
+        public IActionResult Post([FromBody] FormDto form)
         {
             try
             {
                 VerifyUser();
-                _validateService.Validate(model);
+                _validateService.Validate(form);
 
-                await _service.CreateModel(model);
+                _service.Create(form);
 
                 var response = new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
                 return Created(string.Concat(Request.Path, "/", 0), response);
@@ -90,12 +103,12 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [HttpGet("{id}")]
+        public IActionResult GetById([FromRoute] int id)
         {
             try
             {
-                var model = await _service.ReadModelById(id);
+                var model = _service.Read(id);
 
                 if (model == null)
                 {
@@ -115,21 +128,23 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] BICurrency model)
+        [HttpPut("{id}")]
+        public IActionResult Put([FromRoute] int id, [FromBody] FormDto form)
         {
             try
             {
                 VerifyUser();
-                _validateService.Validate(model);
+                _validateService.Validate(form);
 
-                if (id != model.Id)
+                var ibCurrency = _service.Read(id);
+
+                if (ibCurrency == null)
                 {
-                    var response = new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.BAD_REQUEST_MESSAGE).Fail();
-                    return BadRequest(response);
+                    var response = new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE).Fail();
+                    return NotFound();
                 }
 
-                await _service.UpdateModel(id, model);
+                _service.Update(ibCurrency, form);
 
                 return NoContent();
             }
@@ -145,46 +160,36 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [HttpGet("generate-template")]
+        public IActionResult GenerateTemplate()
         {
             try
             {
-                VerifyUser();
-                var model = await _service.ReadModelById(id);
-
-                if (model == null)
-                {
-                    var response = new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE).Fail();
-                    return NotFound(response);
-                }
-                else
-                {
-                    await _service.DeleteModel(id);
-                    return NoContent();
-                }
+                var template = _service.GenerateCSVTemplate();
+                return File(Encoding.UTF8.GetBytes(template), "text/csv", "mata-uang-bi.csv");
             }
             catch (Exception e)
             {
-                Dictionary<string, object> Result =
-                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
-                    .Fail();
-                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+                var response = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message).Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, response);
             }
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> PostCSVFileAsync()
+        private readonly List<string> CSVHeaders = new List<string>() { "Mata Uang", "Tahun", "Bulan", "Rate" };
+
+        [HttpPost("imports")]
+        public IActionResult Import(IFormFile file)
         {
             try
             {
-                if (Request.Form.Files.Count > 0)
+                //if (Request.Form.Files.Count > 0)
+                if (file.Length > 0)
                 {
                     VerifyUser();
                     var uploadedFile = Request.Form.Files[0];
                     var reader = new StreamReader(uploadedFile.OpenReadStream());
                     var fileHeader = new List<string>(reader.ReadLine().Split(","));
-                    var validHeader = _service.CsvHeader.SequenceEqual(fileHeader, StringComparer.OrdinalIgnoreCase);
+                    var validHeader = CSVHeaders.SequenceEqual(fileHeader, StringComparer.OrdinalIgnoreCase);
 
                     if (validHeader)
                     {
@@ -194,60 +199,88 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
                         var csv = new CsvReader(reader);
                         csv.Configuration.IgnoreQuotes = false;
                         csv.Configuration.Delimiter = ",";
-                        csv.Configuration.RegisterClassMap<BICurrencyMap>();
+                        csv.Configuration.RegisterClassMap<IBCurrencyMap>();
                         csv.Configuration.HeaderValidated = null;
+                        csv.Configuration.MissingFieldFound = null;
 
-                        var data = csv.GetRecords<BICurrency>().ToList();
+                        var data = csv.GetRecords<CSVFormDto>().ToList();
 
-                        Tuple<bool, List<object>> Validated = _service.UploadValidate(data, Request.Form.ToList());
+                        var result = _service.UploadCSV(data);
 
                         reader.Close();
 
-                        if (Validated.Item1) /* If Data Valid */
+                        if (!result.IsAnyValidationError) /* If Data Valid */
                         {
-                            await _service.UploadData(data);
-
-                            var response =new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
+                            var response = new ResultFormatter(ApiVersion, General.CREATED_STATUS_CODE, General.OK_MESSAGE).Ok();
                             return Created(HttpContext.Request.Path, response);
 
                         }
                         else
                         {
-                            using (var memoryStream = new MemoryStream())
-                            {
-                                using (var streamWriter = new StreamWriter(memoryStream))
-                                using (var csvWriter = new CsvWriter(streamWriter))
-                                {
-                                    csvWriter.WriteRecords(Validated.Item2);
-                                }
-
-                                return File(memoryStream.ToArray(), ContentType, FileName);
-                            }
+                            var error = result.GetDataStringWithErrorMessage();
+                            return File(Encoding.UTF8.GetBytes(error), "text/csv", "mata-uang-bi.csv");
                         }
                     }
                     else
                     {
-                        var response = new Utils.ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, General.CSV_ERROR_MESSAGE).Fail();
+                        var response = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, General.CSV_ERROR_MESSAGE).Fail();
 
                         return NotFound(response);
                     }
                 }
                 else
                 {
-                    var response = new Utils.ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.NO_FILE_ERROR_MESSAGE).Fail();
+                    var response = new ResultFormatter(ApiVersion, General.BAD_REQUEST_STATUS_CODE, General.NO_FILE_ERROR_MESSAGE).Fail();
                     return BadRequest(response);
                 }
             }
             catch (TypeConverterException ex)
             {
-                var response = new Utils.ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, "Rate diisi huruf\n" + ex.Message).Fail();
+                var response = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, "Tahun, Bulan, Rate diisi huruf\n" + ex.Message).Fail();
                 return StatusCode((int)HttpStatusCode.InternalServerError, response);
             }
             catch (Exception e)
             {
-                var response = new Utils.ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message).Fail();
+                var response = new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message).Fail();
                 return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, response);
             }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            try
+            {
+                VerifyUser();
+                var model = _service.Read(id);
+
+                if (model == null)
+                {
+                    var response = new ResultFormatter(ApiVersion, General.NOT_FOUND_STATUS_CODE, General.NOT_FOUND_MESSAGE).Fail();
+                    return NotFound(response);
+                }
+
+                _service.Delete(model);
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+            }
+        }
+    }
+
+    public class IBCurrencyMap : ClassMap<CSVFormDto>
+    {
+        public IBCurrencyMap()
+        {
+            Map(b => b.Code).Index(0);
+            Map(b => b.Year).Index(1);
+            Map(b => b.Month).Index(2);
+            Map(b => b.Rate).Index(3);
         }
     }
 }
