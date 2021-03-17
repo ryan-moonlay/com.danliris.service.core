@@ -116,7 +116,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
         private readonly IDistributedCache _cache;
         protected override void SetCache()
         {
-            var data = DbContext.Divisions.ToList();
+            var data = DbContext.Divisions.OrderBy(entity => entity.BudgetCashflowLayoutOrder).ToList();
             _cache.SetString("Division", JsonConvert.SerializeObject(data));
         }
 

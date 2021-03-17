@@ -23,6 +23,7 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
+        public int BudgetCashflowLayoutOrder { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

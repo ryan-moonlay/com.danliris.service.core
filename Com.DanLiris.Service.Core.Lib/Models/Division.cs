@@ -23,6 +23,7 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string Description { get; set; }        
         [MaxLength(50)]
         public string COACode { get; set; }
+        public int BudgetCashflowLayoutOrder { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
