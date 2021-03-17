@@ -42,7 +42,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
 
         private void SetCache()
         {
-            var data = _dbContext.AccountingUnits.ToList();
+            var data = _dbContext.AccountingUnits.OrderBy(entity => entity.BudgetCashflowLayoutOrder).ToList();
             _cache.SetString("AccountingUnit", JsonConvert.SerializeObject(data));
         }
 
