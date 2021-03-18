@@ -182,8 +182,8 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         {
             try
             {
-                //if (Request.Form.Files.Count > 0)
-                if (file.Length > 0)
+                if (Request.Form.Files.Count > 0)
+                //if (file.Length > 0)
                 {
                     VerifyUser();
                     var uploadedFile = Request.Form.Files[0];
