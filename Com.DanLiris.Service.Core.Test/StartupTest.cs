@@ -8,6 +8,7 @@ using Com.DanLiris.Service.Core.Lib.Services.GarmentEMKL;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentFabricType;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentForwarder;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseComodity;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseProduct;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentShippingStaff;
 using Com.DanLiris.Service.Core.Lib.Services.GarmentTransactionType;
@@ -116,6 +117,7 @@ namespace Com.DanLiris.Service.Core.Test
                 .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
                 .AddTransient<IGarmentTransactionTypeService, GarmentTransactionTypeService>()
                 .AddTransient<IGarmentLeftoverWarehouseProductService, GarmentLeftoverWarehouseProductService>()
+                .AddTransient<IGarmentLeftoverWarehouseComodityService, GarmentLeftoverWarehouseComodityService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
