@@ -100,6 +100,9 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             garmentCurrencyVM.code = garmentCurrency.Code;
             garmentCurrencyVM.date = garmentCurrency.Date.ToLocalTime();
             garmentCurrencyVM.rate = garmentCurrency.Rate;
+            garmentCurrencyVM.Code = garmentCurrency.Code;
+            garmentCurrencyVM.Date = garmentCurrency.Date;
+            garmentCurrency.Rate = garmentCurrency.Rate;
 
             return garmentCurrencyVM;
         }
