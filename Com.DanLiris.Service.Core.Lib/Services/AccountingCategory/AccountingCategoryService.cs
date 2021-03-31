@@ -4,6 +4,7 @@ using Com.Moonlay.Models;
 using Com.Moonlay.NetCore.Lib;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -21,14 +22,22 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
         private const string UserAgent = "core-service";
         private readonly CoreDbContext _dbContext;
         private readonly IIdentityService _identityService;
+        private readonly IDistributedCache _cache;
         private readonly IServiceProvider _serviceProvider;
 
         public AccountingCategoryService(IServiceProvider serviceProvider)
         {
             _dbContext = serviceProvider.GetService<CoreDbContext>();
             _identityService = serviceProvider.GetService<IIdentityService>();
+            _cache = serviceProvider.GetService<IDistributedCache>();
 
             _serviceProvider = serviceProvider;
+        }
+
+        private void SetCache()
+        {
+            var data = _dbContext.AccountingCategories.ToList();
+            _cache.SetString("AccountingCategory", JsonConvert.SerializeObject(data));
         }
 
         private readonly List<string> _header = new List<string>()
@@ -87,7 +96,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingCategory
             existingModel.Code = model.Code;
             existingModel.Name = model.Name;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
-            _dbContext.AccountingCategories.Update(model);
+            _dbContext.AccountingCategories.Update(existingModel);
             return _dbContext.SaveChangesAsync();
         }
 

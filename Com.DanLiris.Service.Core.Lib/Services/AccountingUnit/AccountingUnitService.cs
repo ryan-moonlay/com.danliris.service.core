@@ -5,6 +5,7 @@ using Com.Moonlay.Models;
 using Com.Moonlay.NetCore.Lib;
 using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -22,12 +23,14 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
         private const string UserAgent = "core-service";
         private readonly CoreDbContext _dbContext;
         private readonly IIdentityService _identityService;
+        private readonly IDistributedCache _cache;
         private readonly IServiceProvider _serviceProvider;
 
         public AccountingUnitService(IServiceProvider serviceProvider)
         {
             _dbContext = serviceProvider.GetService<CoreDbContext>();
             _identityService = serviceProvider.GetService<IIdentityService>();
+            _cache = serviceProvider.GetService<IDistributedCache>();
 
             _serviceProvider = serviceProvider;
         }
@@ -37,21 +40,31 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
             "Code", "Divisi", "Nama", "Deskripsi"
         };
 
+        private void SetCache()
+        {
+            var data = _dbContext.AccountingUnits.OrderBy(entity => entity.BudgetCashflowLayoutOrder).ToList();
+            _cache.SetString("AccountingUnit", JsonConvert.SerializeObject(data));
+        }
+
         public List<string> CsvHeader => _header;
 
-        public Task<int> CreateModel(Models.AccountingUnit model)
+        public async Task<int> CreateModel(Models.AccountingUnit model)
         {
             MoonlayEntityExtension.FlagForCreate(model, _identityService.Username, UserAgent);
             _dbContext.AccountingUnits.Add(model);
-            return _dbContext.SaveChangesAsync();
+            var result = await _dbContext.SaveChangesAsync();
+            SetCache();
+            return result;
         }
 
-        public Task<int> DeleteModel(int id)
+        public async Task<int> DeleteModel(int id)
         {
             var model = _dbContext.AccountingUnits.FirstOrDefault(entity => entity.Id == id);
             MoonlayEntityExtension.FlagForDelete(model, _identityService.Username, UserAgent);
             _dbContext.AccountingUnits.Update(model);
-            return _dbContext.SaveChangesAsync();
+            var result = await _dbContext.SaveChangesAsync();
+            SetCache();
+            return result;
         }
 
         public ReadResponse<Models.AccountingUnit> ReadModel(int page = 1, int size = 25, string order = "{}", List<string> select = null, string keyword = null, string filter = "{}")
@@ -74,15 +87,17 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
             var data = pageable.Data.ToList();
 
             var totalData = pageable.TotalCount;
+            SetCache();
             return new ReadResponse<Models.AccountingUnit>(data, totalData, orderDictionary, new List<string>());
         }
 
         public Task<Models.AccountingUnit> ReadModelById(int id)
         {
+            SetCache();
             return _dbContext.AccountingUnits.FirstOrDefaultAsync(entity => entity.Id == id);
         }
 
-        public Task<int> UpdateModel(int id, Models.AccountingUnit model)
+        public async Task<int> UpdateModel(int id, Models.AccountingUnit model)
         {
             var existingModel = _dbContext.AccountingUnits.FirstOrDefault(entity => entity.Id == id);
             existingModel.Code = model.Code;
@@ -91,8 +106,10 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
             existingModel.DivisionId = model.DivisionId;
             existingModel.DivisionName = model.DivisionName;
             MoonlayEntityExtension.FlagForUpdate(existingModel, _identityService.Username, UserAgent);
-            _dbContext.AccountingUnits.Update(model);
-            return _dbContext.SaveChangesAsync();
+            _dbContext.AccountingUnits.Update(existingModel);
+            var result = await _dbContext.SaveChangesAsync();
+            SetCache();
+            return result;
         }
 
         public Tuple<bool, List<object>> UploadValidate(List<Models.AccountingUnit> data, List<KeyValuePair<string, StringValues>> body)
@@ -178,7 +195,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
             return Tuple.Create(valid, errorList);
         }
 
-        public Task<int> UploadData(List<Models.AccountingUnit> data)
+        public async Task<int> UploadData(List<Models.AccountingUnit> data)
         {
             data = data.Select(element =>
             {
@@ -186,7 +203,9 @@ namespace Com.DanLiris.Service.Core.Lib.Services.AccountingUnit
                 return element;
             }).ToList();
             _dbContext.AccountingUnits.AddRange(data);
-            return _dbContext.SaveChangesAsync();
+            var result = await _dbContext.SaveChangesAsync();
+            SetCache();
+            return result;
         }
     }
 

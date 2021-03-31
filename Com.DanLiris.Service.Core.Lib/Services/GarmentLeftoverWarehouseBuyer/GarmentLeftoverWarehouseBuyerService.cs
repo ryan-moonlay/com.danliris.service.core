@@ -45,7 +45,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer
 
             List<string> SearchAttributes = new List<string>()
             {
-                "Code", "Name", "Address", "PhoneNumber", "NIK", "NPWP", "WPName"
+                "Code", "Name", "Address", "PhoneNumber", "NIK", "NPWP", "WPName", "KaberType"
             };
             Query = QueryHelper<GarmentLeftoverWarehouseBuyerModel>.Search(Query, SearchAttributes, keyword);
 
@@ -65,6 +65,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseBuyer
                 NIK = s.NIK,
                 NPWP = s.NPWP,
                 WPName = s.WPName,
+                KaberType = s.KaberType,
             });
 
             Pageable<GarmentLeftoverWarehouseBuyerModel> pageable = new Pageable<GarmentLeftoverWarehouseBuyerModel>(Query, page - 1, size);

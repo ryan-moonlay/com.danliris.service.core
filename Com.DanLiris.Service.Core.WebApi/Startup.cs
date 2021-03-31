@@ -31,6 +31,10 @@ using Com.DanLiris.Service.Core.Lib.Services.GarmentInsurance;
 using Com.DanLiris.Service.Core.Lib.Services.BICurrency;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingCategory;
 using Com.DanLiris.Service.Core.Lib.Services.AccountingUnit;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentAdditionalCharges;
+using Com.DanLiris.Service.Core.Lib.Services.BudgetingCategory;
+using Com.DanLiris.Service.Core.Lib.Services.IBCurrency;
+using Com.DanLiris.Service.Core.Lib.Services.GarmentLeftoverWarehouseComodity;
 
 namespace Com.DanLiris.Service.Core.WebApi
 {
@@ -109,11 +113,15 @@ namespace Com.DanLiris.Service.Core.WebApi
                 .AddTransient<IGarmentForwarderService, GarmentForwarderService>()
                 .AddTransient<IGarmentTransactionTypeService, GarmentTransactionTypeService>()
                 .AddTransient<IGarmentLeftoverWarehouseProductService, GarmentLeftoverWarehouseProductService>()
+                .AddTransient<IGarmentLeftoverWarehouseComodityService, GarmentLeftoverWarehouseComodityService>()
                 .AddTransient<IGarmentCourierService, GarmentCourierService>()
                 .AddTransient<IGarmentInsuranceService, GarmentInsuranceService>()
                 .AddTransient<IBICurrencyService, BICurrencyService>()
                 .AddTransient<IAccountingCategoryService, AccountingCategoryService>()
                 .AddTransient<IAccountingUnitService, AccountingUnitService>()
+                .AddTransient<IBudgetingCategoryService, BudgetingCategoryService>()
+                .AddTransient<IGarmentAdditionalChargesService, GarmentAdditionalChargesService>()
+                .AddTransient<IIBCurrencyService, IBCurrencyService>()
                 .AddScoped<RolesService>()
                 .AddScoped<SizeService>();
 
@@ -158,6 +166,12 @@ namespace Com.DanLiris.Service.Core.WebApi
                         IssuerSigningKey = Key
                     };
                 });
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetValue<string>("RedisConnection") ?? Configuration["RedisConnection"];
+                options.InstanceName = Configuration.GetValue<string>("RedisConnectionName") ?? Configuration["RedisConnectionName"];
+            });
 
             services.AddCors(o => o.AddPolicy("CorePolicy", builder =>
             {

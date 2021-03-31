@@ -33,6 +33,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string ImportDebtCOA { get; set; }
 
         public int AccountingCategoryId { get; set; }
+        public int BudgetingCategoryId { get; set; }
+        public int ReportLayoutIndex { get; set; }
 
         //public Division Division { get; set; }
 

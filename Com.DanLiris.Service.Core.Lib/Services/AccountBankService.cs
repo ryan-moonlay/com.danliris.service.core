@@ -3,6 +3,8 @@ using Com.DanLiris.Service.Core.Lib.Interfaces;
 using Com.DanLiris.Service.Core.Lib.Models;
 using Com.DanLiris.Service.Core.Lib.ViewModels;
 using Com.Moonlay.NetCore.Lib;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,8 +16,17 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 {
     public class AccountBankService : BasicService<CoreDbContext, AccountBank>, IMap<AccountBank, AccountBankViewModel>
     {
+        private readonly IDistributedCache _cache;
+
         public AccountBankService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _cache = serviceProvider.GetService<IDistributedCache>();
+        }
+
+        protected override void SetCache()
+        {
+            var data = DbContext.AccountBanks.ToList();
+            _cache.SetString("AccountBank", JsonConvert.SerializeObject(data));
         }
 
         public override Tuple<List<AccountBank>, int, Dictionary<string, string>, List<string>> ReadModel(int Page = 1, int Size = 25, string Order = "{}", List<string> Select = null, string Keyword = null, string Filter = "{}")
@@ -89,6 +100,8 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             List<AccountBank> Data = pageable.Data.ToList<AccountBank>();
 
             int TotalData = pageable.TotalCount;
+
+            SetCache();
 
             return Tuple.Create(Data, TotalData, OrderDictionary, SelectedFields);
         }
