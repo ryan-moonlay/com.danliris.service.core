@@ -263,7 +263,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 return date >= currencyWithCodeYear.Last().Date ? currencyWithCodeYear.Last() :
                     date <= currencyWithCodeYear.First().Date ? currencyWithCodeYear.First() :
                     currencyWithCodeYear.Last(d => d.Date <= date);
-                
+
             }
         }
 
@@ -280,6 +280,32 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 }
             }
             return data;
+        }
+
+        public List<GarmentCurrency> GetByDate(int page, int size, string keyword, string filter)
+        {
+            try
+            {
+                Dictionary<string, string> filterDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(filter);
+
+                DateTime dateTime;
+                if (!filterDictionary.Any(x => x.Key.ToLower().Equals("date")) ||
+                    !DateTime.TryParse(filterDictionary.Where(x => x.Key.ToLower().Equals("date")).FirstOrDefault().Value, out dateTime))
+                    throw new Exception("Invalid date format.");
+
+                var query = this.DbSet.Where(x => x.Code.Contains(keyword) && x.Date.Date >= dateTime.Date && !x._IsDeleted)
+                    .GroupBy(x => x.Code)
+                    .Select(y => y.OrderBy(z => z.Date).FirstOrDefault());
+
+                Pageable<GarmentCurrency> pageable = new Pageable<GarmentCurrency>(query, page - 1, size);
+                List<GarmentCurrency> result = pageable.Data.ToList<GarmentCurrency>();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
