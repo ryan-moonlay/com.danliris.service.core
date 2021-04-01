@@ -293,9 +293,9 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     !DateTime.TryParse(filterDictionary.Where(x => x.Key.ToLower().Equals("date")).FirstOrDefault().Value, out dateTime))
                     throw new Exception("Invalid date format.");
 
-                var query = this.DbSet.Where(x => x.Code.Contains(keyword) && x.Date.Date >= dateTime.Date && !x._IsDeleted)
+                var query = this.DbSet.Where(x => x.Code.Contains(keyword) && x.Date.Date <= dateTime.Date && !x._IsDeleted)
                     .GroupBy(x => x.Code)
-                    .Select(y => y.OrderBy(z => z.Date).FirstOrDefault());
+                    .Select(y => y.OrderByDescending(z => z.Date).FirstOrDefault());
 
                 Pageable<GarmentCurrency> pageable = new Pageable<GarmentCurrency>(query, page - 1, size);
                 List<GarmentCurrency> result = pageable.Data.ToList<GarmentCurrency>();

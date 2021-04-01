@@ -142,7 +142,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
             }
         }
 
-        [HttpGet("by-code-after-date")]
+        [HttpGet("by-before-date")]
         public IActionResult GetByCodeAfterDate(int page = 1, int size = 25, string keyword = "", string filter = "{}")
         {
             try
