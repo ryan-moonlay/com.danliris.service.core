@@ -14,6 +14,7 @@ using System.Dynamic;
 using Com.DanLiris.Service.Core.Lib.Interfaces;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Primitives;
+using Microsoft.EntityFrameworkCore;
 
 namespace Com.DanLiris.Service.Core.Lib.Services
 {
@@ -371,5 +372,11 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
 			return Tuple.Create(Valid, ErrorList);
 		}
-	}
+
+        public List<GarmentSupplier> GetByIds(List<int> ids)
+        {
+            return this.DbSet.IgnoreQueryFilters().Where(p => ids.Contains(p.Id))
+                .ToList();
+        }
+    }
 }
