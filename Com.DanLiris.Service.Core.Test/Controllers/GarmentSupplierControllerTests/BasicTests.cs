@@ -6,6 +6,8 @@ using Models = Com.DanLiris.Service.Core.Lib.Models;
 using Xunit;
 using Com.DanLiris.Service.Core.Test.DataUtils;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Net;
 
 namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentSupplierControllerTests
 {
@@ -21,6 +23,13 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentSupplierControllerTe
 		{
 		}
 
-	}
+        [Fact]
+        public async Task GetById()
+        {
+            var response = await this.Client.GetAsync(string.Concat(URI, "/byId"));
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+    }
 }
 
