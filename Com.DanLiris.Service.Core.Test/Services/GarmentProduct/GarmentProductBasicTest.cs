@@ -142,6 +142,17 @@ namespace Com.DanLiris.Service.Core.Test.Services.StandardTest
             var Response = Services.GetByName(model.Name);
             Assert.NotNull(Response);
         }
+
+        [Fact]
+        public async Task Should_Success_Get_Data_By_Code()
+        {
+            GarmentProduct model1 = await DataUtil.GetTestDataAsync();
+            GarmentProduct model2 = await DataUtil.GetTestDataAsync();
+
+            var codes = string.Format("{0},{1}", model1.Code, model2.Code);
+            var Response = Services.GetByCode(codes);
+            Assert.NotNull(Response);
+        }
         [Fact]
         public async Task GetDistinctProductConst()
         {
