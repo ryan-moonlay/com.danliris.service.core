@@ -59,6 +59,15 @@ namespace Com.DanLiris.Service.Core.Test.AutoMapperProfiles
         }
 
         [Fact]
+        public void Should_Success_GarmentLeftoverWarehouseComodityProfile()
+        {
+            var mapper = new MapperConfiguration(configuration => configuration.AddProfile<GarmentLeftoverWarehouseComodityProfile>()).CreateMapper();
+            var model = new GarmentLeftoverWarehouseComodityModel();
+            var vm = mapper.Map<GarmentLeftoverWarehouseComodityViewModel>(model);
+            Assert.NotNull(vm);
+        }
+
+        [Fact]
         public void Should_Success_GarmentShippingStaffProfile()
         {
             var mapper = new MapperConfiguration(configuration => configuration.AddProfile<GarmentShippingStaffProfile>()).CreateMapper();

@@ -87,6 +87,13 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentProduct
         }
 
         [Fact]
+        public async Task GetByCodes()
+        {
+            var response = await this.Client.GetAsync(string.Concat(URI, "/byCode"));
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
         public async Task Post()
         {
 

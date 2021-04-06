@@ -18,9 +18,37 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 	public class GarmentSuppliersController : BasicController<GarmentSupplierService, GarmentSupplier, GarmentSupplierViewModel, CoreDbContext>
 	{
 		private new static readonly string ApiVersion = "1.0";
+        GarmentSupplierService service;
 
-		public GarmentSuppliersController(GarmentSupplierService service) : base(service, ApiVersion)
+        public GarmentSuppliersController(GarmentSupplierService service) : base(service, ApiVersion)
 		{
-		}
-	}
+            this.service = service;
+        }
+
+
+        [HttpGet("byId")]
+        public IActionResult GetByIds([Bind(Prefix = "garmentSupplierList[]")]List<int> garmentSupplierList)
+        {
+            try
+            {
+
+                service.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
+
+                List<GarmentSupplier> Data = service.GetByIds(garmentSupplierList);
+
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE)
+                    .Ok(Data);
+
+                return Ok(Result);
+            }
+            catch (Exception e)
+            {
+                Dictionary<string, object> Result =
+                    new ResultFormatter(ApiVersion, General.INTERNAL_ERROR_STATUS_CODE, e.Message)
+                    .Fail();
+                return StatusCode(General.INTERNAL_ERROR_STATUS_CODE, Result);
+            }
+        }
+    }
 }

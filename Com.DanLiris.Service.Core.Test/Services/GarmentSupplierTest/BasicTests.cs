@@ -7,6 +7,7 @@ using Com.DanLiris.Service.Core.Test.DataUtils;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Com.DanLiris.Service.Core.Test.Services.GarmentSupplierTest
@@ -85,6 +86,16 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentSupplierTest
             GarmentSupplierViewModel Vmodel7 = DataUtil.GetNewData7();
             var Response = Services.UploadValidate(new List<GarmentSupplierViewModel> { Vmodel5, Vmodel6, Vmodel7 }, null);
             Assert.Equal(Response.Item1, false);
+        }
+
+
+        [Fact]
+        public async Task Should_Success_Get_Data_By_Id()
+        {
+            GarmentSupplier model1 = await DataUtil.GetTestDataAsync();
+            GarmentSupplier model2 = await DataUtil.GetTestDataAsync();
+            var Response = Services.GetByIds(new List<int> { model1.Id, model2.Id });
+            Assert.NotNull(Response);
         }
     }
 }

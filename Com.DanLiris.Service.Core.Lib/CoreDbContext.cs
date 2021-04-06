@@ -80,6 +80,7 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<GarmentForwarderModel> GarmentForwarders { get; set; }
         public DbSet<GarmentTransactionTypeModel> GarmentTransactionTypes { get; set; }
         public DbSet<GarmentLeftoverWarehouseProductModel> GarmentLeftoverWarehouseProducts { get; set; }
+        public DbSet<GarmentLeftoverWarehouseComodityModel> GarmentLeftoverWarehouseComodities { get; set; }
         public DbSet<GarmentCourierModel> GarmentCouriers { get; set; }
         public DbSet<GarmentInsuranceModel> GarmentInsurances { get; set; }
         public DbSet<BICurrency> BICurrencies { get; set; }
@@ -87,6 +88,7 @@ namespace Com.DanLiris.Service.Core.Lib
         public DbSet<AccountingCategory> AccountingCategories { get; set; }
         public DbSet<BudgetingCategory> BudgetingCategories { get; set; }
         public DbSet<GarmentAdditionalChargesModel> GarmentAdditionalCharges { get; set; }
+        public DbSet<IBCurrencyModel> IBCurrencies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
