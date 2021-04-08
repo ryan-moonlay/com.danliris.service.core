@@ -102,7 +102,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             garmentCurrencyVM.rate = garmentCurrency.Rate;
             garmentCurrencyVM.Code = garmentCurrency.Code;
             garmentCurrencyVM.Date = garmentCurrency.Date;
-            garmentCurrency.Rate = garmentCurrency.Rate;
+            garmentCurrencyVM.Rate = garmentCurrency.Rate;
 
             return garmentCurrencyVM;
         }
