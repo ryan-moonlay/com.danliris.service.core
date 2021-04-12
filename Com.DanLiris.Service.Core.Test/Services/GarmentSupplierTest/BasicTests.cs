@@ -89,12 +89,23 @@ namespace Com.DanLiris.Service.Core.Test.Services.GarmentSupplierTest
         }
 
 
+        //[Fact]
+        //public async Task Should_Success_Get_Data_By_Id()
+        //{
+        //    GarmentSupplier model1 = await DataUtil.GetTestDataAsync();
+        //    GarmentSupplier model2 = await DataUtil.GetTestDataAsync();
+        //    var Response = Services.GetByIds(new List<int> { model1.Id, model2.Id });
+        //    Assert.NotNull(Response);
+        //}
+
         [Fact]
-        public async Task Should_Success_Get_Data_By_Id()
+        public async Task Should_Success_Get_Data_By_Code()
         {
             GarmentSupplier model1 = await DataUtil.GetTestDataAsync();
             GarmentSupplier model2 = await DataUtil.GetTestDataAsync();
-            var Response = Services.GetByIds(new List<int> { model1.Id, model2.Id });
+
+            var codes = string.Format("{0},{1}", model1.Code, model2.Code);
+            var Response = Services.GetByCodes(codes);
             Assert.NotNull(Response);
         }
     }

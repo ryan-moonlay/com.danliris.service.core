@@ -102,7 +102,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             garmentCurrencyVM.rate = garmentCurrency.Rate;
             garmentCurrencyVM.Code = garmentCurrency.Code;
             garmentCurrencyVM.Date = garmentCurrency.Date;
-            garmentCurrency.Rate = garmentCurrency.Rate;
+            garmentCurrencyVM.Rate = garmentCurrency.Rate;
 
             return garmentCurrencyVM;
         }
@@ -256,18 +256,19 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
         public GarmentCurrency GetSingleByCodeDate(string code, DateTimeOffset date)
         {
-            var currencyWithCodeYear = DbSet.OrderBy(o => o.Date).Where(f => f.Code == code && f.Date.Year == date.Year);
-            if (currencyWithCodeYear.Count() == 0)
-            {
-                return GetSingleByCode(code);
-            }
-            else
-            {
-                return date >= currencyWithCodeYear.Last().Date ? currencyWithCodeYear.Last() :
-                    date <= currencyWithCodeYear.First().Date ? currencyWithCodeYear.First() :
-                    currencyWithCodeYear.Last(d => d.Date <= date);
+            var currencyWithCodeYear = DbSet.Where(entity => entity.Code == code).OrderBy(o => (o.Date - date.DateTime).Duration()).FirstOrDefault();
+            //if (currencyWithCodeYear.Count() == 0)
+            //{
+            //    return GetSingleByCode(code);
+            //}
+            //else
+            //{
+            //    return date >= currencyWithCodeYear.Last().Date ? currencyWithCodeYear.Last() :
+            //        date <= currencyWithCodeYear.First().Date ? currencyWithCodeYear.First() :
+            //        currencyWithCodeYear.Last(d => d.Date <= date);
 
-            }
+            //}
+            return currencyWithCodeYear;
         }
 
         public List<GarmentCurrencyViewModel> GetByCodeBeforeDate(List<GarmentCurrencyViewModel> filters)

@@ -75,7 +75,7 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
 		}
 
         [HttpGet("byCode")]
-        public IActionResult GetByCodes(string code)
+        public IActionResult GetByCodes([FromBody]string code)
         {
             try
             {

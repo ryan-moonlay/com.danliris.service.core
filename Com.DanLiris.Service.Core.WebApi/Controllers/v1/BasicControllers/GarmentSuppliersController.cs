@@ -26,15 +26,15 @@ namespace Com.DanLiris.Service.Core.WebApi.Controllers.v1.BasicControllers
         }
 
 
-        [HttpGet("byId")]
-        public IActionResult GetByIds([Bind(Prefix = "garmentSupplierList[]")]List<int> garmentSupplierList)
+        [HttpGet("byCodes")]
+        public IActionResult GetByIds([FromBody]string code)
         {
             try
             {
 
                 service.Username = User.Claims.Single(p => p.Type.Equals("username")).Value;
 
-                List<GarmentSupplier> Data = service.GetByIds(garmentSupplierList);
+                List<GarmentSupplier> Data = service.GetByCodes(code);
 
                 Dictionary<string, object> Result =
                     new ResultFormatter(ApiVersion, General.OK_STATUS_CODE, General.OK_MESSAGE)
