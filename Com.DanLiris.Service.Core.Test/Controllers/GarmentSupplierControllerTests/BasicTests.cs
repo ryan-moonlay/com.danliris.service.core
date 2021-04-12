@@ -24,9 +24,9 @@ namespace Com.DanLiris.Service.Core.Test.Controllers.GarmentSupplierControllerTe
 		}
 
         [Fact]
-        public async Task GetById()
+        public async Task GetByCode()
         {
-            var response = await this.Client.GetAsync(string.Concat(URI, "/byId"));
+            var response = await this.Client.GetAsync(string.Concat(URI, "/byCodes"));
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
