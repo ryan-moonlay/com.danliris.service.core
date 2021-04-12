@@ -373,10 +373,11 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 			return Tuple.Create(Valid, ErrorList);
 		}
 
-        public List<GarmentSupplier> GetByIds(List<int> ids)
+        public List<GarmentSupplier> GetByCodes(string code)
         {
-            return this.DbSet.IgnoreQueryFilters().Where(p => ids.Contains(p.Id))
-                .ToList();
+            var codes = code.Split(",");
+            //return this.DbSet.IgnoreQueryFilters().FirstOrDefault(p => code == p.Code);
+            return this.DbSet.IgnoreQueryFilters().Where(x => codes.Contains(x.Code)).Select(x => x).ToList();
         }
     }
 }
