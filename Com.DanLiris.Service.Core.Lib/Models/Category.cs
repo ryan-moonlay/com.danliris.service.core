@@ -125,9 +125,9 @@ namespace Com.DanLiris.Service.Core.Lib.Models
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(AlternateCOA))
+            if (!string.IsNullOrWhiteSpace(GeneralCOA))
             {
-                var splittedString = AlternateCOA.Split('.');
+                var splittedString = GeneralCOA.Split('.');
                 if (splittedString.Count() != 2)
                     validationResult.Add(new ValidationResult("Kode COA harus dipisah menggunakan titik.", new List<string> { "AlternateCOA" }));
                 else
