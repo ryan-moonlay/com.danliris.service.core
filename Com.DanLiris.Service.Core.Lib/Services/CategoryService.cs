@@ -46,7 +46,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             /* Const Select */
             List<string> SelectedFields = new List<string>()
             {
-                "_id", "code", "name", "PurchasingCOA", "StockCOA", "LocalDebtCOA", "ImportDebtCOA", "AccountingCategoryId"
+                "_id", "code", "name", "PurchasingCOA", "StockCOA", "LocalDebtCOA", "ImportDebtCOA", "AccountingCategoryId","GeneralCOA"
             }; 
 
             Query = Query
@@ -59,6 +59,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                     StockCOA = b.StockCOA,
                     LocalDebtCOA = b.LocalDebtCOA,
                     ImportDebtCOA = b.ImportDebtCOA,
+                    GeneralCOA = b.GeneralCOA,
                     AccountingCategoryId = b.AccountingCategoryId
                 });
 
@@ -213,6 +214,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             categoryVM.LocalDebtCOA = category.LocalDebtCOA;
             categoryVM.PurchasingCOA = category.PurchasingCOA;
             categoryVM.StockCOA = category.StockCOA;
+            categoryVM.GeneralCOA = category.GeneralCOA;
             categoryVM.codeRequirement = category.CodeRequirement;
             categoryVM.AccountingCategoryId = category.AccountingCategoryId;
             categoryVM.Id = category.Id;
@@ -241,6 +243,7 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             category.LocalDebtCOA = categoryVM.LocalDebtCOA;
             category.PurchasingCOA = categoryVM.PurchasingCOA;
             category.StockCOA = categoryVM.StockCOA;
+            category.GeneralCOA = categoryVM.GeneralCOA;
             category.AccountingCategoryId = categoryVM.AccountingCategoryId;
 
             return category;
