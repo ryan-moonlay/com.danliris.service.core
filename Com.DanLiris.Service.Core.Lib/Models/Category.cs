@@ -31,6 +31,8 @@ namespace Com.DanLiris.Service.Core.Lib.Models
         public string LocalDebtCOA { get; set; }
         [MaxLength(50)]
         public string ImportDebtCOA { get; set; }
+        [MaxLength(50)]
+        public string GeneralCOA { get; set; }
 
         public int AccountingCategoryId { get; set; }
         public int BudgetingCategoryId { get; set; }
@@ -120,6 +122,21 @@ namespace Com.DanLiris.Service.Core.Lib.Models
 
                     if (firstCodeCount != 4 || secondCodeCount != 2)
                         validationResult.Add(new ValidationResult("Kode COA tidak valid.", new List<string> { "ImportDebtCOA" }));
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(AlternateCOA))
+            {
+                var splittedString = AlternateCOA.Split('.');
+                if (splittedString.Count() != 2)
+                    validationResult.Add(new ValidationResult("Kode COA harus dipisah menggunakan titik.", new List<string> { "AlternateCOA" }));
+                else
+                {
+                    var firstCodeCount = splittedString[0].Count();
+                    var secondCodeCount = splittedString[1].Count();
+
+                    if (firstCodeCount != 4 || secondCodeCount != 2)
+                        validationResult.Add(new ValidationResult("Kode COA tidak valid.", new List<string> { "AlternateCOA" }));
                 }
             }
 
