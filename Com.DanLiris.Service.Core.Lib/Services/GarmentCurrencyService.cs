@@ -100,6 +100,9 @@ namespace Com.DanLiris.Service.Core.Lib.Services
             garmentCurrencyVM.code = garmentCurrency.Code;
             garmentCurrencyVM.date = garmentCurrency.Date.ToLocalTime();
             garmentCurrencyVM.rate = garmentCurrency.Rate;
+            garmentCurrencyVM.Code = garmentCurrency.Code;
+            garmentCurrencyVM.Date = garmentCurrency.Date;
+            garmentCurrencyVM.Rate = garmentCurrency.Rate;
 
             return garmentCurrencyVM;
         }
@@ -253,18 +256,19 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
         public GarmentCurrency GetSingleByCodeDate(string code, DateTimeOffset date)
         {
-            var currencyWithCodeYear = DbSet.OrderBy(o => o.Date).Where(f => f.Code == code && f.Date.Year == date.Year);
-            if (currencyWithCodeYear.Count() == 0)
-            {
-                return GetSingleByCode(code);
-            }
-            else
-            {
-                return date >= currencyWithCodeYear.Last().Date ? currencyWithCodeYear.Last() :
-                    date <= currencyWithCodeYear.First().Date ? currencyWithCodeYear.First() :
-                    currencyWithCodeYear.Last(d => d.Date <= date);
-                
-            }
+            var currencyWithCodeYear = DbSet.Where(entity => entity.Code == code).OrderBy(o => (o.Date - date.DateTime).Duration()).FirstOrDefault();
+            //if (currencyWithCodeYear.Count() == 0)
+            //{
+            //    return GetSingleByCode(code);
+            //}
+            //else
+            //{
+            //    return date >= currencyWithCodeYear.Last().Date ? currencyWithCodeYear.Last() :
+            //        date <= currencyWithCodeYear.First().Date ? currencyWithCodeYear.First() :
+            //        currencyWithCodeYear.Last(d => d.Date <= date);
+
+            //}
+            return currencyWithCodeYear;
         }
 
         public List<GarmentCurrencyViewModel> GetByCodeBeforeDate(List<GarmentCurrencyViewModel> filters)
@@ -280,6 +284,32 @@ namespace Com.DanLiris.Service.Core.Lib.Services
                 }
             }
             return data;
+        }
+
+        public List<GarmentCurrency> GetByDate(int page, int size, string keyword, string filter)
+        {
+            try
+            {
+                Dictionary<string, string> filterDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(filter);
+
+                DateTime dateTime;
+                if (!filterDictionary.Any(x => x.Key.ToLower().Equals("date")) ||
+                    !DateTime.TryParse(filterDictionary.Where(x => x.Key.ToLower().Equals("date")).FirstOrDefault().Value, out dateTime))
+                    throw new Exception("Invalid date format.");
+
+                var query = this.DbSet.Where(x => x.Code.Contains(keyword) && x.Date.Date <= dateTime.Date && !x._IsDeleted)
+                    .GroupBy(x => x.Code)
+                    .Select(y => y.OrderByDescending(z => z.Date).FirstOrDefault());
+
+                Pageable<GarmentCurrency> pageable = new Pageable<GarmentCurrency>(query, page - 1, size);
+                List<GarmentCurrency> result = pageable.Data.ToList<GarmentCurrency>();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

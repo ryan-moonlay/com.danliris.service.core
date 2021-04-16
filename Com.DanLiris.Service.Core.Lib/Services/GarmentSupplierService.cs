@@ -14,6 +14,7 @@ using System.Dynamic;
 using Com.DanLiris.Service.Core.Lib.Interfaces;
 using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Primitives;
+using Microsoft.EntityFrameworkCore;
 
 namespace Com.DanLiris.Service.Core.Lib.Services
 {
@@ -371,5 +372,12 @@ namespace Com.DanLiris.Service.Core.Lib.Services
 
 			return Tuple.Create(Valid, ErrorList);
 		}
-	}
+
+        public List<GarmentSupplier> GetByCodes(string code)
+        {
+            var codes = code.Split(",");
+            //return this.DbSet.IgnoreQueryFilters().FirstOrDefault(p => code == p.Code);
+            return this.DbSet.IgnoreQueryFilters().Where(x => codes.Contains(x.Code)).Select(x => x).ToList();
+        }
+    }
 }
